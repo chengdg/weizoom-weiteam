@@ -1,0 +1,50 @@
+{
+  "name": "manage-system-base",
+  "version": "1.0.0",
+  "description": "codebase for manage system",
+  "main": "index.js",
+  "author": {
+    "name": "robert"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --inline --hot --content-base build --port 4188",
+    "build": "webpack --inline --progress --colors"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-react": "^6.3.13",
+    "classnames": "^2.2.3",
+    "css-loader": "^0.23.1",
+    "debug": "^2.2.0",
+    "flux": "^2.1.1",
+    "keymirror": "^0.1.1",
+    "object-assign": "^4.0.1",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "style-loader": "^0.13.0",
+    "underscore": "^1.8.3",
+    "webpack": "^1.12.12",
+    "webpack-dev-server": "^1.14.1",
+    "reactman": "git+https://git2.weizzz.com:84/productivity/reactman.git",
+    "babel-runtime": "^6.6.1",
+    "underscore.string": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-jsxhint": "^0.8.0",
+    "grunt-md5": "^0.1.11",
+    "grunt-replace": "^0.11.0",
+    "grunt-shell": "^1.1.2",
+    "load-grunt-tasks": "^3.4.0"
+  },
+  "readmeFilename": "README.md"
+}

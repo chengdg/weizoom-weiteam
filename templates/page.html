@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load common_filter %}
+
+{% block content %}
+<div class="xa-pageContainer pr"></div>
+<div id="jsons" style="display: none;">
+	<div id="__json-topNavs">
+		{{top_navs|to_json|safe}}
+	</div>
+	<div id="__json-secondNavs">
+		{{second_navs|to_json|safe}}
+	</div>
+	{% for inner_json_name, inner_json_content in jsons.items %}
+	<div id="__json-{{inner_json_name}}">
+	    {{inner_json_content|safe}}
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}
+
+{% block base_js %}
+<script type="text/javascript">
+	W.userName = "{{ request.user.first_name }}";
+	W.topNavs = W.loadJSON('topNavs');
+	W.secondNavs = W.loadJSON('secondNavs');
+	W.activeTopNav = "{{ first_nav_name }}";
+	W.activeSecondNav = "{{ second_nav_name }}";
+</script>
+{% block js %}{% endblock %}
+{% endblock %}

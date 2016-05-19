@@ -1,0 +1,56 @@
+[
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "admin", 
+      "first_name": "Administrator", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2011-08-04 13:09:42", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$33d25$3f52cd97c61f6366cdb9b74d62aaa6cb70680af7", 
+      "email": "admin@wintim.com", 
+      "date_joined": "2011-08-04 13:09:42"
+    }
+  },
+  {
+    "pk": 2, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "test", 
+      "first_name": "Tester", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": true, 
+      "last_login": "2011-08-04 13:09:42", 
+      "groups": [1], 
+      "user_permissions": [], 
+      "password": "sha1$69e44$6b9205a6687914bdc912d40d9020e3a7bea68335", 
+      "email": "test@wintim.com", 
+      "date_joined": "2011-08-04 13:09:42"
+    }
+  },
+  {
+    "pk": 3, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "manager", 
+      "first_name": "Manager", 
+      "last_name": "", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": true, 
+      "last_login": "2011-08-04 13:09:42", 
+      "groups": [1], 
+      "user_permissions": [], 
+      "password": "sha1$69e44$6b9205a6687914bdc912d40d9020e3a7bea68335", 
+      "email": "test@wintim.com", 
+      "date_joined": "2011-08-04 13:09:42"
+    }
+  }
+]

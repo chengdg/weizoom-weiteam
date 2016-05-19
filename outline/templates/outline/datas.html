@@ -1,0 +1,15 @@
+{% extends "page.html" %}
+
+{% block js %}
+<script type="text/javascript">
+	W.breadcrumb = [{
+		name: '数据概况',
+		href: '/outline/datas/'
+	}, {
+		name: '商品数据',
+		href: '#'
+	}];
+
+	W.pageContentComponent = './outline/datas/DatasPage.react';
+</script>
+{% endblock %}
