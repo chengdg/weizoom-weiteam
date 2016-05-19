@@ -1,4 +1,4 @@
-**weteam**
+**weteam——新一代看板+OKR系统**
 
 # FAQ
 
@@ -19,8 +19,8 @@ cnpm install
 ### 如何在本地开发调试？ ###
 
 答：初次搭建环境，按如下步骤：
-1. 在mysql中创建`wemanage`数据库: `create database wemanage`;
-1. 将`wemanage`数据库授权给`wemanage`用户：`grant all on wemanage.* to 'wemanage'@localhost identified by 'weizoom'`
+1. 在mysql中创建`weteam`数据库: `create database weteam`;
+1. 将`weteam`数据库授权给`weteam`用户：`grant all on weteam.* to 'weteam'@localhost identified by 'weizoom'`
 1. 执行 `rebuild.bat`，初始化数据库
 1. 启动 `start_bundle_server.bat`
 1. 启动 `start_server.bat | bunyan`

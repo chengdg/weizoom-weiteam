@@ -352,7 +352,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('modify-mode', function() {
-		var filePath = './dist/wemanage/settings.py';
+		var filePath = './dist/weteam/settings.py';
 		var content = grunt.file.read(filePath);
 		content = content.replace("MODE = 'develop'", "MODE = 'deploy'")
 		grunt.file.write(filePath, content)

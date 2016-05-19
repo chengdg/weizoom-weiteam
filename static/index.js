@@ -10,6 +10,8 @@ var ReactDOM = require('react-dom');
 var Reactman = require('reactman');
 window.W = Reactman.W;
 
+var Page = require('./component/page/Page.react');
+
 window.Debug = require("debug");
 
 $(document).ready(function() {
@@ -20,15 +22,12 @@ $(document).ready(function() {
 	var pageNode = $page.get(0);
 
 	ReactDOM.render(
-		<Reactman.Page 
-			sitename="WeManage" 
+		<Page 
+			sitename="WeTeam" 
 			userName={W.userName}
 			topNavs={W.topNavs} 
 			activeTopNav={W.activeTopNav} 
-			secondNavs={W.secondNavs} 
-			activeSecondNav={W.activeSecondNav}
-			breadcrumb={W.breadcrumb}
 			pageContentComponent={W.pageContentComponent}
-		></Reactman.Page>, 
+		></Page>, 
 	pageNode);
 });

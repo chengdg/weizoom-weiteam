@@ -18,9 +18,8 @@ from account import views as account_view
 
 urlpatterns = patterns('',
 	url(r'^$', account_view.index),
-	url(r'^component/', restful_url('component')),
+	url(r'^project/', restful_url('project')),
 	url(r'^account/', restful_url('account')),
-	url(r'^outline/', restful_url('outline')),
 	url(r'^resource/', restful_url('resource')),
 )
 

@@ -8,7 +8,7 @@ from django.http import SimpleCookie
 from django.contrib.auth.models import User
 from django.db.models import Model
 from account.models import UserProfile
-from wemanage import settings
+from weteam import settings
 
 tc = None
 

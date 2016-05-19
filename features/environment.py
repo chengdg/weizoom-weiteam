@@ -4,7 +4,7 @@
 # 配置，使behave能使用django的model
 #
 import os
-os.environ['DJANGO_SETTINGS_MODULE'] = 'wemanage.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'weteam.settings'
 
 import sys
 path = os.path.abspath(os.path.join('.', '..'))
@@ -13,7 +13,7 @@ sys.path.insert(0, path)
 import unittest
 from pymongo import Connection
 
-from wemanage import settings
+from weteam import settings
 from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.test.client import Client

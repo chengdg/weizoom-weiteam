@@ -1,2 +1,2 @@
-drop database if exists wemanage;
-create database wemanage default char set 'utf8';
+drop database if exists weteam;
+create database weteam default char set 'utf8';

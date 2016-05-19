@@ -66,16 +66,13 @@ html, body {
  * navbar 样式
  */
 .xui-navbar {
-	background-color: #181818;
-    background-image: url("/static/img/foot-header-bg.png");
-    background-repeat: repeat-x;
+	background-color: #FEFEFE;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
     border: none;
 }
 .xui-navbar .nav > li > a {
-    color: #a7b1c2;
-    font-weight: 600;
-    padding: 15px 20px 15px 25px;
+    /*font-weight: 600;*/
+    /*padding: 15px 20px 15px 25px;*/
 }
 
 
@@ -125,16 +122,14 @@ html, body {
  * content区域样式
  */
 .xui-contentPanel {
-	background-color: #2F4050;
-	min-height: 1500px;
+	/*background-color: #2F4050;*/
 }
 .xui-container {
-	min-height: 1500px;
 	-webkit-transition: all 0.5s ease 0s;
 	-moz-transition: all 0.5s ease 0s;
 	transition: all 0.5s ease 0s;
-	margin: 0px 0px 0px 220px;
-	background-color: #F3F3F3;
+	margin: 0px 0px 0px 0px;
+	/*background-color: #F3F3F3;*/
 }
 
 
@@ -142,16 +137,14 @@ html, body {
  * enhance bootstrap
  */
 #header .navbar-brand {
-	font-size: 26px;
+	font-weight: bold;
+	color: #5e5e5e;
 }
 /*
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
 	background-color: #FFF;
 }
 */
-.navbar-default .navbar-brand {
-	color: #FFF;
-}
 .breadcrumb {
 	background-color: #FFF;
 	margin-bottom: 0px;

@@ -26,6 +26,6 @@ class LoginedAccount(resource.Resource):
 
 		if user:
 			auth.login(request, user)
-			return HttpResponseRedirect('/outline/outline/')
+			return HttpResponseRedirect('/project/projects/')
 		else:
 			return HttpResponseRedirect('/account/login/')

@@ -24,11 +24,11 @@ DATABASES = {
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'ENGINE': 'django.db.backends.mysql',
         # Or path to database file if using sqlite3.
-        'NAME': 'wemanage',
-        'USER': 'wemanage',                      # Not used with sqlite3.
+        'NAME': 'weteam',
+        'USER': 'weteam',                      # Not used with sqlite3.
         'PASSWORD': 'weizoom',                  # Not used with sqlite3.
         # Set to empty string for localhost. Not used with sqlite3.
-        'HOST': '127.0.0.1'
+        'HOST': 'db.weteam.com'
     }
 }
 
@@ -119,10 +119,10 @@ MIDDLEWARE_CLASSES = [
 ]
 
 
-ROOT_URLCONF = 'wemanage.urls'
+ROOT_URLCONF = 'weteam.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'wemanage.wsgi.application'
+WSGI_APPLICATION = 'weteam.wsgi.application'
 
 TEMPLATE_CONTEXT_PROCESSORS = [
     'django.contrib.auth.context_processors.auth',
@@ -151,8 +151,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'project',
     'account',
-    'outline',
     'resource',
 
     # Uncomment the next line to enable the admin:

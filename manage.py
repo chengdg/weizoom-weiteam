@@ -43,7 +43,7 @@ from django.conf import settings
 # autoreload.reloader_thread = my_reloader_thread
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wemanage.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "weteam.settings")
 
     from django.core.management import execute_from_command_line
 

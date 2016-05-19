@@ -13,12 +13,12 @@ var Reactman = require('reactman');
 // var Constant = require('./Constant');
 var Action = require('./Action');
 
-var CommentDialog = Reactman.createDialog({
+var NewProjectDialog = Reactman.createDialog({
 	getInitialState: function() {
-		var product = this.props.data.product;
 		return {
-			comment: product.comment
-		}
+			name: '',
+			description: ''
+		};
 	},
 
 	onChange: function(value, event) {
@@ -55,11 +55,12 @@ var CommentDialog = Reactman.createDialog({
 		<div className="xui-formPage">
 			<form className="form-horizontal mt15">
 				<fieldset>
-					<Reactman.FormText label="备注:" name="comment" validate="require-string" placeholder="输入'error'体验评论失败场景，其他内容体验评论成功场景" value={this.state.comment} onChange={this.onChange} autoFocus={true} inDialog={true} width={300} height={200}/>
+					<Reactman.FormInput label="项目名:" name="name" validate="require-string" value={this.state.name} onChange={this.onChange} autoFocus={true} inDialog={true} />
+					<Reactman.FormInput label="简介:" name="description" validate="require-string" value={this.state.description} onChange={this.onChange} />
 				</fieldset>
 			</form>
 		</div>
 		)
 	}
 })
-module.exports = CommentDialog;
+module.exports = NewProjectDialog;
