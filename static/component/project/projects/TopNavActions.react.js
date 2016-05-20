@@ -20,7 +20,7 @@ var TopNavActions = React.createClass({
 			component: NewProjectDialog, 
 			data: {},
 			success: function(inputData, dialogState) {
-				alert('haha');
+				Reactman.W.reload();
 			}
 		});
 	},

@@ -33,21 +33,13 @@ class Project(models.Model):
 		db_table = 'project_project'
 
 
-class StaredProject(models.Model):
-	"""
-	关注项目
-	"""
-	owner = models.ForeignKey(User)
-	project = models.ForeignKey(Project)
-	created_at = models.DateTimeField(auto_now_add=True)
-
-	class Meta(object):
-		db_table = 'project_stared_project'
-
-
 class UserJoinProject(models.Model):
+	"""
+	用户参与项目的情况
+	"""
 	user = models.ForeignKey(User)
 	project = models.ForeignKey(Project)
+	is_stared = models.BooleanField(default=False)
 	is_manager = models.BooleanField(default=False)
 
 	def __unicode__(self):

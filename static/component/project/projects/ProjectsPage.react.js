@@ -16,6 +16,7 @@ var Action = require('./Action');
 
 //var CommentDialog = require('./CommentDialog.react');
 var TopNavActions = require('./TopNavActions.react');
+var Project = require('./Project.react');
 
 require('./style.css');
 
@@ -59,9 +60,17 @@ var ProjectsPage = React.createClass({
 	},
 
 	render:function(){
+		var cProjectList = this.state.projects.map(function(project, index) {
+			return (
+				<Project key={index} data={project} />
+			)
+		});
+
 		return (
 		<div className="mt15 xui-project-projectsPage">
-			projects
+			<div className="pt10">
+			{cProjectList}
+			</div>
 		</div>
 		)
 	}

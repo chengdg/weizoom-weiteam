@@ -16,21 +16,27 @@ var Constant = require('./Constant');
 
 var Store = StoreUtil.createStore(Dispatcher, {
 	actions: {
-		'handleUpdateProduct': Constant.OUTLINE_DATAS_UPDATE_PRODUCT,
-		'handleFilterProducts': Constant.OUTLINE_DATAS_FILTER_PRODUCTS,
+		'handleDeleteProduct': Constant.PROJECT_PROJECTS_DELETE_PROJECT,
+		'handleStarProduct': Constant.PROJECT_PROJECTS_STAR_PROJECT
 	},
 
 	init: function() {
-		this.data = {
-		};
+		var projects = Reactman.loadJSON('projects');
+		if (projects) {
+			this.data = {
+				projects: projects
+			};
+		} else {
+			this.data = {};
+		}
 	},
 
-	handleUpdateProduct: function(action) {
+	handleDeleteProduct: function(action) {
 		this.__emitChange();
 	},
 
-	handleFilterProducts: function(action) {
-		this.data.filterOptions = action.data;
+	handleStarProduct: function(action) {
+		debug(action);
 		this.__emitChange();
 	},
 

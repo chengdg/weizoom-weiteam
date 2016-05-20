@@ -22,6 +22,7 @@ class BProject(business_model.Model):
 		'description',
 		'is_delete',
 		'is_managed_by_user',
+		'is_stared_by_user',
 		'created_at'
 	)
 	
@@ -50,6 +51,7 @@ class BProject(business_model.Model):
 		business_model.Model.__init__(self)
 		self._init_slot_from_model(model)
 		self.is_managed_by_user = False
+		self.is_stared_by_user = False
 
 	def delete(self):
 		project_models.Project.objects.filter(id=self.id).update(is_deleted=True)

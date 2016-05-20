@@ -1,6 +1,58 @@
+.xui-project-projectsPage {
+	width: 1170px;
+	padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
 .xui-project-newProjectDialog .col-sm-5 input {
 	width: 330px;
 }
 .xui-project-newProjectDialog .form-horizontal .control-label {
 	width: 100px;
+}
+
+
+.xui-project {
+	padding: 0px 20px 10px 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 2px 0 rgba(0,0,0,0.5);
+	-webkit-transition: background-color 0.8s;
+	transition: background-color 0.5s;
+	cursor: pointer;
+}
+.xui-project:hover {
+	background-color: #FCF8E3;
+}
+.xui-project .xui-i-notStared {
+	display: block;
+	color: #CFCFCF;
+}
+.xui-project .xui-i-stared {
+	display: block;
+	color: #E4B92E;
+}
+.xui-project .xui-i-title {
+	border-bottom: solid 1px #BFBFBF;
+	padding: 5px 0px;
+}
+.xui-project .xui-i-title h3 {
+	padding-top: 5px;
+	padding-bottom: 1px;
+	margin: 0px;
+	font-size: 2em;
+}
+.xui-project .xui-i-title h3 span {
+	font-size: 0.5em;
+	color: #888;
+}
+.xui-project .xui-i-info {
+	padding: 5px;
+}
+.xui-project .xui-i-bottomBar {
+	color: #888;
+	text-align: right;
 }

@@ -34,7 +34,8 @@ class Projects(resource.Resource):
 				'name': b_project.name,
 				'description': b_project.description,
 				'isManagedByUser': b_project.is_managed_by_user,
-				'createdAt': b_project.created_at.strftime('%Y年%m月%d日创建')
+				'isStaredByUser': b_project.is_stared_by_user,
+				'createdAt': b_project.created_at.strftime('%Y年%m月%d日')
 			})
 		frontend_data.add('projects', project_datas)
 		
