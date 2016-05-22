@@ -18,17 +18,22 @@ def top_navs(request):
 			'displayName': '周报',
 			'icon': 'calendar',
 			'href': '/report/weekly_report/'
-		}, {
-			'name': 'account',
-			'displayName': '成员',
-			'icon': 'fa-users',
-			'href': '/account/users/'
-		}, {
-			'name': 'config',
-			'displayName': '配置',
-			'icon': 'cog',
-			'href': '#'
 		}]
+
+		if request.user.username == 'manager':
+			top_navs.append({
+				'name': 'account',
+				'displayName': '成员',
+				'icon': 'fa-users',
+				'href': '/account/users/'
+			})
+			top_navs.append({
+				'name': 'config',
+				'displayName': '配置',
+				'icon': 'cog',
+				'href': '#'
+			})
+
 	else:
 		top_navs = [{
 			'name': 'kanban',
