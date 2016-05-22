@@ -53,7 +53,7 @@ class BProjectRepository(business_model.Model):
 			if user_project_relation.is_manager:
 				b_project.is_managed_by_user = True
 			if user_project_relation.is_stared:
-				b_project.is_started_by_user = True
+				b_project.is_stared_by_user = True
 			b_projects.append(b_project)
 
 		return b_projects

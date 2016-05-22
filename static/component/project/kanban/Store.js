@@ -22,24 +22,7 @@ var Store = StoreUtil.createStore(Dispatcher, {
 	},
 
 	init: function() {
-		this.data = Reactman.loadJSON('product');
-		if (this.data) {
-			this.data['isJoinPromotion'] = this.data['is_join_promotion'] ? '1' : '0';
-			this.data['promotionFinishDate'] = this.data['promotion_finish_date'];
-			this.data['channels'] = JSON.parse(this.data['channels']);
-		} else {
-			this.data = {
-				'id':-1, 
-				'isJoinPromotion':'0', 
-				'promotionFinishDate': '',
-				'channels': [],
-				'models': [],
-				'images': [],
-				'detail': '',
-				'documents': []
-			};
-		}
-		debug(this.data);
+		this.data = {};
 	},
 
 	handleUpdateProduct: function(action) {

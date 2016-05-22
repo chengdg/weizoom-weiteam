@@ -38,8 +38,7 @@ var ProjectsPage = React.createClass({
 	},
 
 	onChangeStore: function(event) {
-		var filterOptions = Store.getData().filterOptions;
-		this.refs.table.refresh(filterOptions);
+		this.setState(Store.getData());
 	},
 
 	onClickComment: function(event) {

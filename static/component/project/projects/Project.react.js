@@ -15,6 +15,16 @@ var Action = require('./Action');
 
 
 var Project = React.createClass({
+	componentDidMount: function() {
+		var $project = $(ReactDOM.findDOMNode(this));
+		var $actionBar = $project.find('.xa-actionBar').eq(0);
+		$project.mouseenter(function() {
+			$actionBar.removeClass('xui-invisible');
+		}).mouseleave(function() {
+			$actionBar.addClass('xui-invisible');
+		});
+	},
+
 	onClickDelete: function(event) {
 		var productId = parseInt(event.target.getAttribute('data-product-id'));
 		Reactman.PageAction.showConfirm({
@@ -46,15 +56,24 @@ var Project = React.createClass({
 	onClickStar: function(event) {
 		var project = this.props.data;
 		var isStared = project.isStaredByUser;
-		Action.starProject(project);
+		if (!isStared) {
+			Action.starProject(project);
+		} else {
+			Action.unstarProject(project);
+		}
+	},
+
+	onClickProject: function(event) {
+		var projectId = event.currentTarget.getAttribute('data-id');
+		Action.gotoKanban(projectId);
 	},
 
 	render:function(){
 		var project = this.props.data;
 
-		var starClasses = classNames("fr", "fa", "fa-2x", "mt10", project.isStartedByUser ? "fa-star xui-i-stared" : "fa-star-o xui-i-notStared");
+		var starClasses = classNames("fr", "fa", "fa-2x", "mt10", project.isStaredByUser ? "fa-star xui-i-stared" : "fa-star-o xui-i-notStared");
 		return (
-		<div className="xui-project mt20 xa-project" data-id="40">
+		<div className="xui-project mt20 xa-project" data-id={project.id} onClick={this.onClickProject}>
 			<div className="xui-i-title clearfix">
 				<h3 className="fl">
 					{project.name}
@@ -67,8 +86,8 @@ var Project = React.createClass({
 				<div>{project.description}</div>
 				<div className="xui-i-bottomBar">
 					<span className="mr10 xui-invisible xa-actionBar">
-						<button className="btn btn-default btn-xs xa-editProject"><span className="glyphicon glyphicon-pencil"></span></button>
-						<button className="btn btn-default btn-xs xa-deleteProject"><span className="glyphicon glyphicon-remove"></span></button>
+						<button className="btn btn-default btn-xs mr5"><span className="glyphicon glyphicon-pencil"></span></button>
+						<button className="btn btn-default btn-xs"><span className="glyphicon glyphicon-remove"></span></button>
 					</span>
 					{project.createdAt}创建
 				</div>

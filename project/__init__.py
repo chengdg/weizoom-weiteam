@@ -3,3 +3,5 @@ __author__ = 'robert'
 
 import projects
 import project
+import stared_project
+import kanban

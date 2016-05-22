@@ -7,5 +7,6 @@ var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
 	PROJECT_PROJECTS_DELETE_PROJECT: null,
-	PROJECT_PROJECTS_STAR_PROJECT: null
+	PROJECT_PROJECTS_STAR_PROJECT: null,
+	PROJECT_PROJECTS_UNSTAR_PROJECT: null
 });

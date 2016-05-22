@@ -17,7 +17,7 @@ import nav
 import models
 from business.project.b_project_repository import BProjectRepository
 
-FIRST_NAV = 'outline'
+FIRST_NAV = 'project'
 
 class Projects(resource.Resource):
 	app = 'project'

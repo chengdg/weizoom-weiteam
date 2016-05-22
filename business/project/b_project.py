@@ -73,3 +73,15 @@ class BProject(business_model.Model):
 		更新团队信息
 		"""
 		project_models.Project.objects.filter(id=self.id).update(name=name, description=description)
+
+	def star_by_user(self, user):
+		"""
+		user将project加星
+		"""
+		project_models.UserJoinProject.objects.filter(id=self.id, user=user).update(is_stared=True)
+
+	def unstar_by_user(self, user):
+		"""
+		user将project取消加星
+		"""
+		project_models.UserJoinProject.objects.filter(id=self.id, user=user).update(is_stared=False)

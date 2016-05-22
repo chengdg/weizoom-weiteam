@@ -21,7 +21,13 @@ var TopNav = React.createClass({
 					active: nav.name === activeNav
 				});
 
-				var iconClasses = classNames('glyphicon', 'glyphicon-'+nav.icon);
+				if (nav.icon.contains('glyphicon-')) {
+					var iconClasses = classNames('glyphicon', nav.icon);	
+				} else if (nav.icon.contains('fa-')) {
+					var iconClasses = classNames('fa', nav.icon, 'fa-3');
+				} else {
+					var iconClasses = classNames('glyphicon', 'glyphicon-'+nav.icon);
+				}
 
 				return (
 					<li className={liClasses} key={"li-"+nav.name}><a href={nav.href}><span className={iconClasses}></span> {nav.displayName}</a></li>

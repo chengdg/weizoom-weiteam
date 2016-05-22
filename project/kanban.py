@@ -15,29 +15,22 @@ import nav
 import models
 from resource import models as resource_models
 from util import string_util
+from business.project.b_project import BProject
 from business.project.b_project_repository import BProjectRepository
 
-FIRST_NAV = 'project'
+FIRST_NAV = 'kanban'
 
-class StaredProject(resource.Resource):
+class Kanban(resource.Resource):
 	app = 'project'
-	resource = 'stared_project'
-
+	resource = 'kanban'
+	
 	@login_required
-	def api_put(request):
-		project_id = request.POST['id']
+	def get(request):
+		project_id = request.GET.get('id', None)
 		b_project = BProjectRepository.get().get_project_by_id(project_id)
-		b_project.star_by_user(request.user)
 
-		response = create_response(200)
-		return response.get_response()
-
-
-	@login_required
-	def api_delete(request):
-		project_id = request.POST['id']
-		b_project = BProjectRepository.get().get_project_by_id(project_id)
-		b_project.unstar_by_user(request.user)
-
-		response = create_response(200)
-		return response.get_response()
+		c = RequestContext(request, {
+			'first_nav_name': FIRST_NAV
+		})
+		
+		return render_to_response('project/kanban.html', c)

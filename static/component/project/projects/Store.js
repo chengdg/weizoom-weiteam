@@ -16,27 +16,56 @@ var Constant = require('./Constant');
 
 var Store = StoreUtil.createStore(Dispatcher, {
 	actions: {
-		'handleDeleteProduct': Constant.PROJECT_PROJECTS_DELETE_PROJECT,
-		'handleStarProduct': Constant.PROJECT_PROJECTS_STAR_PROJECT
+		'handleDeleteProject': Constant.PROJECT_PROJECTS_DELETE_PROJECT,
+		'handleStarProject': Constant.PROJECT_PROJECTS_STAR_PROJECT,
+		'handleUnStarProject': Constant.PROJECT_PROJECTS_UNSTAR_PROJECT
 	},
 
 	init: function() {
 		var projects = Reactman.loadJSON('projects');
 		if (projects) {
 			this.data = {
-				projects: projects
+				projects: this.__sortProject(projects)
 			};
 		} else {
 			this.data = {};
 		}
 	},
 
-	handleDeleteProduct: function(action) {
+	__getProject: function(id) {
+		return _.find(this.data.projects, function(project) {
+			return project.id === id;
+		});
+	},
+
+	__sortProject: function(projects) {
+		return _.sortBy(projects, function(project) {
+			var index = 0;
+			if (project.isStaredByUser) {
+				index += 1000000;
+			}
+
+			index += project.id;
+
+			return 0 - index;
+		})
+	},
+
+	handleDeleteProject: function(action) {
 		this.__emitChange();
 	},
 
-	handleStarProduct: function(action) {
-		debug(action);
+	handleStarProject: function(action) {
+		var project = this.__getProject(action.data.projectId);
+		project.isStaredByUser = true;
+		//this.data.projects = this.__sortProject(this.data.projects);
+		this.__emitChange();
+	},
+
+	handleUnStarProject: function(action) {
+		var project = this.__getProject(action.data.projectId);
+		project.isStaredByUser = false;
+		//this.data.projects = this.__sortProject(this.data.projects);
 		this.__emitChange();
 	},
 

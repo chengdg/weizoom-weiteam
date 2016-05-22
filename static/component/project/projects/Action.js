@@ -36,10 +36,30 @@ var Action = {
 				dispatcher: Dispatcher,
 				actionType: Constant.PROJECT_PROJECTS_STAR_PROJECT,
 				data: {
-					project: project
+					projectId: project.id
 				}
 			}
 		})
+	},
+
+	unstarProject: function(project) {
+		Resource.delete({
+			resource: 'project.stared_project',
+			data: {
+				id: project.id
+			},
+			dispatch: {
+				dispatcher: Dispatcher,
+				actionType: Constant.PROJECT_PROJECTS_UNSTAR_PROJECT,
+				data: {
+					projectId: project.id
+				}
+			}
+		})
+	},
+
+	gotoKanban: function(projectId) {
+		Reactman.W.gotoPage('/project/kanban/?id='+projectId);
 	}
 };
 

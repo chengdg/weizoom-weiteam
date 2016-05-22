@@ -16,6 +16,7 @@ import models
 from resource import models as resource_models
 from util import string_util
 from business.project.b_project import BProject
+from business.project.b_project_repository import BProjectRepository
 
 FIRST_NAV = 'project'
 
@@ -25,65 +26,14 @@ class Project(resource.Resource):
 	
 	@login_required
 	def get(request):
-		#获取业务数据
-		product_id = request.GET.get('id', None)
-		jsons = {'items':[]}
-		if product_id:
-			product = models.Product.objects.get(owner=request.user, id=product_id)
-			product_data = {
-				'id': product.id,
-				'name': product.name,
-				'weight': product.weight,
-				'price': product.price,
-				'is_join_promotion': product.is_join_promotion,
-				'promotion_finish_date': product.promotion_finish_time.strftime('%Y-%m-%d %H:%M'),
-				'channels': product.channels,
-				'detail': string_util.raw_html(product.detail),
-				'models': [],
-				'images': [],
-				'documents': [],
-				'created_at': product.created_at.strftime('%Y-%m-%d %H:%M')
-			}
-	
-			#获取商品规格
-			product_models = models.ProductModel.objects.filter(product_id=product_id)
-			for product_model in product_models:
-				product_data['models'].append({
-					'id': product_model.id,
-					'name': product_model.name,
-					'stocks': product_model.stocks
-				})
-
-			#获取商品图片
-			product_image_ids = [product_image.image_id for product_image in models.ProductImage.objects.filter(product_id=product_id)]
-			for image in resource_models.Image.objects.filter(id__in=product_image_ids):
-				product_data['images'].append({
-					'id': image.id,
-					'path': image.path
-				})
-
-			#获取商品文档
-			product_document_ids = [product_document.document_id for product_document in models.ProductDocument.objects.filter(product_id=product_id)]
-			for document in resource_models.Document.objects.filter(id__in=product_document_ids):
-				product_data['documents'].append({
-					'id': document.id,
-					'type': document.type,
-					'name': document.filename,
-					'path': document.path
-				})
-
-			jsons['items'].append(('product', json.dumps(product_data)))
-		else:
-			jsons['items'].append(('product', json.dumps(None)))
+		project_id = request.GET.get('id', None)
+		b_project = BProjectRepository.get_project_by_id(project_id)
 
 		c = RequestContext(request, {
-			'first_nav_name': FIRST_NAV,
-			'second_navs': nav.get_second_navs(),
-			'second_nav_name': SECOND_NAV,
-			'jsons': jsons
+			'first_nav_name': FIRST_NAV
 		})
 		
-		return render_to_response('outline/data.html', c)
+		return render_to_response('project/project.html', c)
 
 	@login_required
 	def api_put(request):
