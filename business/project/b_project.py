@@ -12,6 +12,11 @@ from django.contrib.auth import models as auth_models
 import business.model as business_model
 from business.decorator import cached_context_property
 from project import models as project_models
+from business.project.b_iteration import BIteration
+from business.project.b_iteration_repository import BIterationRepository
+from business.project.b_stage import BStage
+from business.project.b_stage_repository import BStageRepository
+from business.project.b_task import BTask
 
 MANAGER_GROUP_ID = 1
 
@@ -44,6 +49,10 @@ class BProject(business_model.Model):
 			project = project,
 			is_manager = True
 		)
+
+		BStage.create_default_stages(project)
+		BIteration.create_default_iteration(project)
+		BIteration.create_kanban(project)
 
 		return project
 
@@ -85,3 +94,12 @@ class BProject(business_model.Model):
 		user将project取消加星
 		"""
 		project_models.UserJoinProject.objects.filter(id=self.id, user=user).update(is_stared=False)
+
+	def add_requirement(self, options):
+		"""
+		向project中添加requirment
+		"""
+		options['project_id'] = self.id
+		options['iteration_id'] = BIterationRepository.get().get_default_iteration(self.id).id
+		options['stage_id'] = BStageRepository.get().get_default_stage(self.id).id
+		BTask.create_requirement(options)

@@ -7,6 +7,9 @@ from django.conf import settings
 #===============================================================================
 def top_navs(request):
 	top_navs = None
+	if not request.user.is_active:
+		return {'top_navs': []}
+
 	if 'project/projects' in request.path:
 		top_navs = [{
 			'name': 'project',
@@ -35,16 +38,17 @@ def top_navs(request):
 			})
 
 	else:
+		project_id = request.GET['project_id']
 		top_navs = [{
 			'name': 'kanban',
 			'displayName': '看板',
 			'icon': 'list-alt',
-			'href': '/project/projects/'
+			'href': '/project/kanban/?project_id='+project_id
 		}, {
 			'name': 'requirement',
 			'displayName': '需求',
 			'icon': 'fa-database',
-			'href': '/report/requirements/'
+			'href': '/project/requirements/?project_id='+project_id
 		}, {
 			'name': 'bug',
 			'displayName': 'Bug',

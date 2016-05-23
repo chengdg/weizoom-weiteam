@@ -21,21 +21,21 @@ def get_filter_key(key, filter2field):
 	else:
 		return name
 
-def get_filter_value(key, request):
+def get_filter_value(key, filter_options):
 	_, _, match_strategy = key[2:].split('-')
 	if match_strategy == 'range':
-		value = json.loads(request.GET[key])
+		value = json.loads(filter_options[key])
 		return tuple(value)
 	else:
-		return request.GET[key]
+		return filter_options[key]
 
-def filter_query_set(query_set, request, filter2field):
-	filters = dict([(get_filter_key(key, filter2field), get_filter_value(key, request)) for key in request.GET if key.startswith('__f-')])
-	print '-*-' * 20
-	print filters
-	print '-*-' * 20
+def filter_query_set(query_set, filter_options, filter2field=None):
+	if hasattr(filter_options, 'GET'):
+		#filter_options是一个request对象
+		filter_options = filter_options.GET
+
+	filters = dict([(get_filter_key(key, filter2field), get_filter_value(key, filter_options)) for key in filter_options if key.startswith('__f-')])
 
 	if not filters:
-		print 'return directly'
 		return query_set
 	return query_set.filter(**filters)

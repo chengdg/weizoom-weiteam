@@ -24,6 +24,8 @@ var Page = React.createClass({
 		$(document).click(function(event) {
 			Reactman.PageAction.hidePopover();
 		});
+
+		$('[data-toggle="tooltip"]').tooltip();
 	},
 
 	onChangePageStore: function() {
@@ -35,7 +37,6 @@ var Page = React.createClass({
 		var pageContent = '';
 		if (this.props.pageContentComponent) {
 			var pageContentComponent = dynamicRequire(this.props.pageContentComponent);
-			debug(pageContentComponent);
 			var pageContent = React.createElement(pageContentComponent, {});
 		}
 

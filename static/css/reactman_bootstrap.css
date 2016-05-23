@@ -1,21 +1,3 @@
-body {
-	color: #404040;
-}
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
-    background-color: #19AA8D;
-    color: #FFF;
-}
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-  color: #FFF;
-  background-color: transparent;
-}
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-  color: #EFEFEF;
-  background-color: transparent;
-}
-
 .row {
   margin-left: 0px;
   margin-right: 0px;

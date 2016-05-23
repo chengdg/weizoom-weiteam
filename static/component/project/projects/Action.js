@@ -59,7 +59,7 @@ var Action = {
 	},
 
 	gotoKanban: function(projectId) {
-		Reactman.W.gotoPage('/project/kanban/?id='+projectId);
+		Reactman.W.gotoPage('/project/kanban/?project_id='+projectId);
 	}
 };
 

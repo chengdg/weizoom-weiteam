@@ -1,0 +1,9 @@
+.xui-project-newRequirementDialog .col-sm-5 input {
+	width: 730px;
+}
+.xui-project-newRequirementDialog .col-sm-5 select {
+	width: 130px;
+}
+.xui-project-newRequirementDialog .form-horizontal .control-label {
+	width: 100px;
+}

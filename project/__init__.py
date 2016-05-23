@@ -5,3 +5,5 @@ import projects
 import project
 import stared_project
 import kanban
+import requirement
+import requirements
