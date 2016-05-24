@@ -1,0 +1,47 @@
+.xui-project-kanbanPage {
+	background-color: #FFF;
+}
+
+.xui-kanbanHeader {
+	height: 50px;
+    line-height: 50px;
+    padding-left: 20px;
+    position: relative;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-bottom: solid 1px #D9D9D9;
+    background-color: #eee;
+}
+.xui-kanbanContainer {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.xui-kanban {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.xui-kanban-column {
+    background-color: #eee;
+    border: solid 1px #D1D1D1;
+    border-radius: 5px;
+    width: 250px;
+    margin-top: 10px;
+    margin-left: 10px;
+    float: left;
+    /* overflow-y: auto; */
+}
+.xui-kanban-column .xui-i-header {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+    position: relative;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-bottom: solid 1px #D9D9D9;
+    /* cursor: move; */
+}
+.xui-kanban-column .xui-i-taskContainer {
+    overflow-y: auto;
+    height: 100%;
+}

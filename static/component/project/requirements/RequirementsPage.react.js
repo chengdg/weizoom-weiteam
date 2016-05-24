@@ -20,17 +20,16 @@ require('./style.css');
 var RequirementsPage = React.createClass({
 	getInitialState: function() {
 		Store.addListener(this.onChangeStore);
-		debug(Store.getData());
 		return Store.getData();
 	},
 
 	onClickDelete: function(event) {
-		var productId = parseInt(event.target.getAttribute('data-product-id'));
+		var requirementId = parseInt(event.target.getAttribute('data-id'));
 		Reactman.PageAction.showConfirm({
 			target: event.target, 
 			title: '确认删除吗?',
 			confirm: _.bind(function() {
-				Action.deleteProduct(productId);
+				Action.deleteRequirement(requirementId);
 			}, this)
 		});
 	},
@@ -62,8 +61,8 @@ var RequirementsPage = React.createClass({
 		} else if (field === 'action') {
 			return (
 			<div>
-				<button className="btn btn-default btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="删除">
-<i className="glyphicon glyphicon-remove"></i></button>
+				<button className="btn btn-default btn-xs mr5" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="进入看板"><i className="glyphicon glyphicon-list-alt"></i></button>
+				<button className="btn btn-default btn-xs" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="删除" onClick={this.onClickDelete}><i className="glyphicon glyphicon-remove"></i></button>
 			</div>
 			);
 		} else if (field === 'expand-row') {

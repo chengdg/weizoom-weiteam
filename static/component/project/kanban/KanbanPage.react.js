@@ -14,6 +14,10 @@ var Resource = Reactman.Resource;
 //var ProductModelList = require('./ProductModelList.react');
 var Store = require('./Store');
 var Action = require('./Action');
+var KanbanHeader = require('./KanbanHeader.react');
+var Kanban = require('./Kanban.react');
+
+require('./style.css');
 
 var KanbanPage = React.createClass({
 	getInitialState: function() {
@@ -26,7 +30,6 @@ var KanbanPage = React.createClass({
 	},
 
 	onChange: function(value, event) {
-		debug(value);
 		var property = event.target.getAttribute('name');
 		Action.updateProduct(property, value);
 	},
@@ -36,13 +39,28 @@ var KanbanPage = React.createClass({
 	},
 
 	componentDidMount: function() {
-		debug(ReactDOM.findDOMNode(this.refs.name));
+		$('body').css('overflow-y', 'hidden');
+		
+		var $window = $(window);
+		var height = $window.height() - 50;
+
+		var $page = $(ReactDOM.findDOMNode(this));
+		$page.height(height);
+
+		var iteration = this.state.iteration;
+		var windowWidth = $window.width();
+		var width = 260 * iteration.stages.length + 100; //每个stage宽度为260
+		if (width > windowWidth) {
+			$page.width(width);
+		}
+		
 	},
 
 	render:function(){
 		return (
 		<div className="xui-project-kanbanPage xui-formPage">
-			kanban page
+			<KanbanHeader projectId={this.state.projectId} iteration={this.state.iteration}/>
+			<Kanban stages={this.state.iteration.stages} />
 		</div>
 		)
 	}

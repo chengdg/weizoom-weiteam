@@ -23,6 +23,53 @@ var Store = StoreUtil.createStore(Dispatcher, {
 
 	init: function() {
 		this.data = {};
+		this.data['projectId'] = Reactman.loadJSON('projectId');
+		this.data['iteration'] = {
+			id: 1,
+			stages: [{
+				id: 1,
+				name: 'TODO',
+				isBufferStage: false,
+				wipCount: 8,
+				wipContainer: '',
+				tasks: []
+			}, {
+				id: 2,
+				name: '设计',
+				isBufferStage: false,
+				wipCount: 3,
+				wipContainer: '',
+				tasks: []
+			}, {
+				id: 3,
+				name: '待开发',
+				isBufferStage: true,
+				wipCount: 0,
+				wipContainer: '设计',
+				tasks: []
+			}, {
+				id: 11,
+				name: 'TODO',
+				isBufferStage: false,
+				wipCount: 8,
+				wipContainer: '',
+				tasks: []
+			}, {
+				id: 12,
+				name: '设计',
+				isBufferStage: false,
+				wipCount: 3,
+				wipContainer: '',
+				tasks: []
+			}, {
+				id: 13,
+				name: '待开发',
+				isBufferStage: true,
+				wipCount: 0,
+				wipContainer: '设计',
+				tasks: []
+			}]
+		}
 	},
 
 	handleUpdateProduct: function(action) {
