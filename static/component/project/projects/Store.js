@@ -18,7 +18,8 @@ var Store = StoreUtil.createStore(Dispatcher, {
 	actions: {
 		'handleDeleteProject': Constant.PROJECT_PROJECTS_DELETE_PROJECT,
 		'handleStarProject': Constant.PROJECT_PROJECTS_STAR_PROJECT,
-		'handleUnStarProject': Constant.PROJECT_PROJECTS_UNSTAR_PROJECT
+		'handleUnStarProject': Constant.PROJECT_PROJECTS_UNSTAR_PROJECT,
+		'handleUpdateProject': Constant.PROJECT_PROJECTS_UPDATE_PROJECT
 	},
 
 	init: function() {
@@ -52,6 +53,10 @@ var Store = StoreUtil.createStore(Dispatcher, {
 	},
 
 	handleDeleteProject: function(action) {
+		this.__emitChange();
+	},
+
+	handleUpdateProject: function(action) {
 		this.__emitChange();
 	},
 

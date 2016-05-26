@@ -38,24 +38,7 @@ var ProjectsPage = React.createClass({
 	},
 
 	onChangeStore: function(event) {
-		this.setState(Store.getData());
-	},
-
-	onClickComment: function(event) {
-		var productId = parseInt(event.target.getAttribute('data-product-id'));
-		var product = this.refs.table.getData(productId);
-		Reactman.PageAction.showDialog({
-			title: "创建备注", 
-			component: CommentDialog, 
-			data: {
-				product: product
-			},
-			success: function(inputData, dialogState) {
-				var product = inputData.product;
-				var comment = dialogState.comment;
-				Action.updateProduct(product, 'comment', comment);
-			}
-		});
+		Reactman.W.reload();
 	},
 
 	render:function(){

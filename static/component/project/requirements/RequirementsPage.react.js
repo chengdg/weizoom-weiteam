@@ -14,6 +14,7 @@ var Store = require('./Store');
 var Constant = require('./Constant');
 var Action = require('./Action');
 var NewRequirementDialog = require('./NewRequirementDialog.react');
+var EditRequirementDialog = require('./EditRequirementDialog.react');
 
 require('./style.css');
 
@@ -21,6 +22,11 @@ var RequirementsPage = React.createClass({
 	getInitialState: function() {
 		Store.addListener(this.onChangeStore);
 		return Store.getData();
+	},
+
+	componentDidMount: function() {
+		var $window = $(window);
+		this.dialogHeight = $window.height() - 200;
 	},
 
 	onClickDelete: function(event) {
@@ -34,66 +40,35 @@ var RequirementsPage = React.createClass({
 		});
 	},
 
+	onClickPullToKanban: function(event) {
+		var requirementId = parseInt(event.currentTarget.getAttribute('data-id'));
+		var requirement = this.refs.table.getData(requirementId);
+		Action.pullToKanban(requirement);
+	},
+
+	onClickViewRequirement: function(event) {
+		var requirementId = parseInt(event.currentTarget.getAttribute('data-id'));
+		var requirement = this.refs.table.getData(requirementId);
+		var projectId = this.state.projectId;
+		
+		Reactman.PageAction.showDialog({
+			title: requirement.title, 
+			type: 'large',
+			height: this.dialogHeight,
+			component: EditRequirementDialog, 
+			data: {
+				projectId: projectId,
+				requirementId: requirementId
+			},
+			success: function(inputData, dialogState) {
+				Action.updateRequirement(requirement, dialogState);
+			}
+		});
+	},
+
 	onChangeStore: function(event) {
 		var filterOptions = Store.getData().filterOptions;
 		this.refs.table.refresh(filterOptions);
-	},
-
-	rowFormatter: function(field, value, data) {
-		if (field === 'models') {
-			var models = value;
-			var modelEls = models.map(function(model, index) {
-				return (
-					<div key={"model"+index}>{model.name} - {model.stocks}</div>
-				)
-			});
-			return (
-				<div style={{color:'red'}}>{modelEls}</div>
-			);
-		} else if (field === 'name') {
-			return (
-				<a href={'/outline/data/?id='+data.id}>{value}</a>
-			)
-		} else if (field === 'price') {
-			return (
-				<a onClick={this.onClickPrice} data-product-id={data.id}>{value}</a>
-			)
-		} else if (field === 'action') {
-			return (
-			<div>
-				<button className="btn btn-default btn-xs mr5" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="进入看板"><i className="glyphicon glyphicon-list-alt"></i></button>
-				<button className="btn btn-default btn-xs" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="删除" onClick={this.onClickDelete}><i className="glyphicon glyphicon-remove"></i></button>
-			</div>
-			);
-		} else if (field === 'expand-row') {
-			return (
-				<div style={{paddingBottom:'20px'}}>
-				<div className="clearfix" style={{backgroundColor:'#EFEFEF', color:'#FF0000', padding:'5px', borderBottom:'solid 1px #CFCFCF'}}>
-					<div className="fl">促销结束日：{data.promotion_finish_time}</div>
-					<div className="fr">总金额: {data.price}元</div>
-				</div>
-				</div>
-			)
-		} else {
-			return value;
-		}
-	},
-
-	onClickComment: function(event) {
-		var productId = parseInt(event.target.getAttribute('data-product-id'));
-		var product = this.refs.table.getData(productId);
-		Reactman.PageAction.showDialog({
-			title: "创建备注", 
-			component: CommentDialog, 
-			data: {
-				product: product
-			},
-			success: function(inputData, dialogState) {
-				var product = inputData.product;
-				var comment = dialogState.comment;
-				Action.updateProduct(product, 'comment', comment);
-			}
-		});
 	},
 
 	onConfirmFilter: function(data) {
@@ -113,6 +88,23 @@ var RequirementsPage = React.createClass({
 				Reactman.W.reload();
 			}
 		});
+	},
+
+	rowFormatter: function(field, value, data) {
+		if (field === 'title') {
+			return (
+				<a onClick={this.onClickViewRequirement} className="xui-i-title" data-id={data.id}>{value}</a>
+			);
+		} else if (field === 'action') {
+			return (
+			<div>
+				<button className="btn btn-default btn-xs mr5" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="进入看板" onClick={this.onClickPullToKanban}><i className="glyphicon glyphicon-list-alt"></i></button>
+				<button className="btn btn-default btn-xs" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="删除" onClick={this.onClickDelete}><i className="glyphicon glyphicon-remove"></i></button>
+			</div>
+			);
+		} else {
+			return value;
+		}
 	},
 
 	render:function(){
@@ -136,7 +128,17 @@ var RequirementsPage = React.createClass({
 		}, {
 			text: '已结束',
 			value: '2'
-		}]
+		}];
+
+		var importanceOptions = [{
+				text: '加载中...',
+				value: '-1'
+			}];
+
+		var storyPointOptions = [{
+				text: '加载中...',
+				value: '-1'
+			}];
 
 		return (
 		<div className="p20 xui-project-requirementsPage">

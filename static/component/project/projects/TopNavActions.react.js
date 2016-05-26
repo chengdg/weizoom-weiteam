@@ -10,14 +10,14 @@ var _ = require('underscore');
 
 var Reactman = require('reactman');
 
-var NewProjectDialog = require('./NewProjectDialog.react');
+var ProjectDialog = require('./ProjectDialog.react');
 
 
 var TopNavActions = React.createClass({
 	onClickAddProject: function(event) {
 		Reactman.PageAction.showDialog({
 			title: "创建团队", 
-			component: NewProjectDialog, 
+			component: ProjectDialog, 
 			data: {},
 			success: function(inputData, dialogState) {
 				Reactman.W.reload();

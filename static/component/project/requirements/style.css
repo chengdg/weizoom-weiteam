@@ -7,3 +7,16 @@
 .xui-project-newRequirementDialog .form-horizontal .control-label {
 	width: 100px;
 }
+
+.xui-project-requirementsPage .xui-i-title {
+	display: block;
+	cursor: pointer;
+}
+
+.xui-project-editRequirementDialog .xui-i-content {
+	border-bottom: solid 1px #EFEFEF;
+	padding-bottom: 10px;
+}
+.xui-project-editRequirementDialog .xui-i-bar {
+	background-color: #EFEFEF;
+}

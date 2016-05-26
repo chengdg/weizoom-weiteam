@@ -12,6 +12,7 @@ var classNames = require('classnames');
 var Reactman = require('reactman');
 
 var Action = require('./Action');
+var ProjectDialog = require('./ProjectDialog.react');
 
 
 var Project = React.createClass({
@@ -26,31 +27,31 @@ var Project = React.createClass({
 	},
 
 	onClickDelete: function(event) {
-		var productId = parseInt(event.target.getAttribute('data-product-id'));
+		var project = this.props.data;
 		Reactman.PageAction.showConfirm({
 			target: event.target, 
 			title: '确认删除吗?',
 			confirm: _.bind(function() {
-				Action.deleteProduct(productId);
+				Action.deleteProject(project.id);
 			}, this)
 		});
+		event.stopPropagation();
 	},
 
 	onClickEdit: function(event) {
-		var productId = parseInt(event.target.getAttribute('data-product-id'));
-		var product = this.refs.table.getData(productId);
+		var project = this.props.data;
 		Reactman.PageAction.showDialog({
-			title: "创建备注", 
-			component: CommentDialog, 
+			title: "更改团队信息", 
+			component: ProjectDialog, 
 			data: {
-				product: product
+				project: project
 			},
 			success: function(inputData, dialogState) {
 				var product = inputData.product;
-				var comment = dialogState.comment;
-				Action.updateProduct(product, 'comment', comment);
+				Action.updateProject(product, dialogState.changed);
 			}
 		});
+		event.stopPropagation();
 	},
 
 	onClickStar: function(event) {
@@ -86,8 +87,8 @@ var Project = React.createClass({
 				<div>{project.description}</div>
 				<div className="xui-i-bottomBar">
 					<span className="mr10 xui-invisible xa-actionBar">
-						<button className="btn btn-default btn-xs mr5"><span className="glyphicon glyphicon-pencil"></span></button>
-						<button className="btn btn-default btn-xs"><span className="glyphicon glyphicon-remove"></span></button>
+						<button className="btn btn-default btn-xs mr5" onClick={this.onClickEdit}><span className="glyphicon glyphicon-pencil"></span></button>
+						<button className="btn btn-default btn-xs" onClick={this.onClickDelete}><span className="glyphicon glyphicon-remove"></span></button>
 					</span>
 					{project.createdAt}创建
 				</div>

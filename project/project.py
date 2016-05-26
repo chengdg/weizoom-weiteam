@@ -36,55 +36,42 @@ class Project(resource.Resource):
 		return render_to_response('project/project.html', c)
 
 	@login_required
+	def api_get(request):
+		project_id = request.GET.get('id', None)
+		b_project = BProjectRepository.get().get_project_by_id(project_id)
+
+		response = create_response(200)
+		response.data = {
+			'id': b_project.id,
+			'name': b_project.name,
+			'description': b_project.description
+		}
+
+		return response.get_response()
+
+	@login_required
 	def api_put(request):
 		name = request.POST['name']
 		description = request.POST['description']
 		b_project = BProject.create(request.user, name, description)
 
 		response = create_response(200)
-
 		return response.get_response()
 
 	@login_required
 	def api_post(request):
-		#更新商品
-		models.Product.objects.filter(owner=request.user, id=request.POST['id']).update(
-			name = request.POST['name'],
-			weight = request.POST['weight'],
-			price = request.POST['price'],
-			channels = request.POST['channels'],
-			detail = request.POST['detail'],
-			is_join_promotion = (request.POST['is_join_promotion'] == '1'),
-			promotion_finish_time = request.POST['promotion_finish_date']
-		)
-
-		#删除、重建商品规格
-		product = models.Product.objects.get(owner=request.user, id=request.POST['id'])
-		models.ProductModel.objects.filter(product_id=product.id).delete()
-		product_models = json.loads(request.POST['models'])
-		for product_model in product_models:
-			models.ProductModel.objects.create(product=product, name=product_model['name'], stocks=product_model['stocks'])
-
-		#删除、重建商品图片
-		models.ProductImage.objects.filter(product_id=product.id).delete()
-		product_images = json.loads(request.POST['images'])
-		for product_image in product_images:
-			models.ProductImage.objects.create(product=product, image_id=product_image['id'])
-
-		#删除、重建商品文档
-		models.ProductDocument.objects.filter(product_id=product.id).delete()
-		product_documents = json.loads(request.POST['documents'])
-		for product_document in product_documents:
-			models.ProductDocument.objects.create(product=product, document_id=product_document['id'])
+		project_id = request.POST['id']
+		b_project = BProjectRepository.get().get_project_by_id(project_id)
+		b_project.update(request.POST['name'], request.POST['description'])
 
 		response = create_response(200)
-
 		return response.get_response()
 
 	@login_required
 	def api_delete(request):
-		models.Product.objects.filter(owner=request.user, id=request.POST['id']).delete()
+		project_id = request.POST['id']
+		b_project = BProjectRepository.get().get_project_by_id(project_id)
+		b_project.delete()
 
 		response = create_response(200)
-
 		return response.get_response()

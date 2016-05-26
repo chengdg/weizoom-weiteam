@@ -16,6 +16,7 @@ from project import models as project_models
 class BTask(business_model.Model):
 	__slots__ = (
 		'id',
+		'type',
 		'is_shared',
 		'manager',
 		'title',
@@ -68,3 +69,13 @@ class BTask(business_model.Model):
 
 	def delete(self):
 		pass
+
+	def update(self, field, value):
+		"""
+		更新task的属性
+		"""
+		options = {
+			field: value
+		}
+		project_models.Task.objects.filter(id=self.id).update(**options)
+		return True

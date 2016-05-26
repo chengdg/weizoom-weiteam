@@ -47,7 +47,7 @@ class BProjectRepository(business_model.Model):
 		project2relation = dict([(r.project_id, r) for r in user_project_relations])
 
 		b_projects = []
-		for project_model in project_models.Project.objects.filter(id__in=project_ids).order_by('-id'):
+		for project_model in project_models.Project.objects.filter(id__in=project_ids, is_deleted=False).order_by('-id'):
 			b_project = BProject.from_model(project_model)
 			user_project_relation = project2relation[project_model.id]
 			if user_project_relation.is_manager:

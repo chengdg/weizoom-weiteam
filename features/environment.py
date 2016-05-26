@@ -52,20 +52,35 @@ def __clear_all_app_data():
 		clean_module.clean()
 
 
-def __create_system_user(username):
+class FakeRequest(object):
+	def __init__(self):
+		pass
+
+def __create_system_user(username, real_name):
 	"""
 	创建系统用户
 	"""
-	user = User.objects.create_user(username=username, email='a@a.com', password='test')
-	return user	
+	from account import user
+	manager = User.objects.get(username='manager')
+	request = FakeRequest()
+	request.user = manager
+	request.POST = {
+		"name": username,
+		"real_name": real_name,
+		"email": '%s@polaris.com' % username,
+		"password": 'test',
+		"thumbnail": "/static/img/test/%s.jpg" % username
+	}
+
+	user.User.api_put(request)	
 
 
 def before_all(context):
 	__clear_all_account_data()
-	__create_system_user('jobs')
-	__create_system_user('bill')
-	__create_system_user('tom')
-	__create_system_user('nokia')
+	__create_system_user('leijun', u'雷军')
+	__create_system_user('yangmi', u'杨幂')
+	__create_system_user('zhouxun', u'周迅')
+	__create_system_user('yaochen', u'姚晨')
 
 	#创建test case，使用assert
 	context.tc = unittest.TestCase('__init__')

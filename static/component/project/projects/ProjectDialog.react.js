@@ -15,10 +15,21 @@ var Action = require('./Action');
 
 var NewProjectDialog = Reactman.createDialog({
 	getInitialState: function() {
-		return {
-			name: '',
-			description: ''
-		};
+		var project = this.props.data.project;
+		if (project) {
+			debug(project);
+			return {
+				id: project.id,
+				name: project.name,
+				description: project.description
+			}
+		} else {
+			return {
+				id: null,
+				name: '',
+				description: ''
+			}
+		}
 	},
 
 	onChange: function(value, event) {
@@ -30,17 +41,31 @@ var NewProjectDialog = Reactman.createDialog({
 
 	onBeforeCloseDialog: function() {
 		var project = this.state;
-		Reactman.Resource.put({
-			resource: 'project.project',
-			data: project,
-			success: function() {
-				this.closeDialog();
-			},
-			error: function() {
-				Reactman.PageAction.showHint('error', '创建团队失败!');
-			},
-			scope: this
-		})
+		if (this.state.id) {
+			Reactman.Resource.post({
+				resource: 'project.project',
+				data: project,
+				success: function() {
+					this.closeDialog();
+				},
+				error: function() {
+					Reactman.PageAction.showHint('error', '更新团队信息失败!');
+				},
+				scope: this
+			});
+		} else {
+			Reactman.Resource.put({
+				resource: 'project.project',
+				data: project,
+				success: function() {
+					this.closeDialog();
+				},
+				error: function() {
+					Reactman.PageAction.showHint('error', '创建团队失败!');
+				},
+				scope: this
+			});
+		}
 	},
 
 	render:function(){
@@ -49,7 +74,7 @@ var NewProjectDialog = Reactman.createDialog({
 			<form className="form-horizontal mt15">
 				<fieldset>
 					<Reactman.FormInput label="团队:" name="name" validate="require-string" value={this.state.name} onChange={this.onChange} autoFocus={true} inDialog={true} />
-					<Reactman.FormText label="团队简介:" name="description" validate="require-string" value={this.state.description} onChange={this.onChange} width={330} height={200}/>
+					<Reactman.FormText label="团队简介:" name="description" validate="require-string" value={this.state.description} onChange={this.onChange} width={330} height={150}/>
 				</fieldset>
 			</form>
 		</div>

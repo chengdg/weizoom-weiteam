@@ -10,7 +10,7 @@ def top_navs(request):
 	if not request.user.is_active:
 		return {'top_navs': []}
 
-	if 'project/projects' in request.path:
+	if (not '/project/' in request.path) or ('project/projects' in request.path):
 		top_navs = [{
 			'name': 'project',
 			'displayName': '团队看板',

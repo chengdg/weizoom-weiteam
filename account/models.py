@@ -16,9 +16,8 @@ from core import dateutil
 
 class UserProfile(models.Model):
 	user = models.ForeignKey(User, unique=True)
-	manager_id = models.IntegerField(default=0) #创建该用户的系统用户的id
-	is_active = models.BooleanField(default=True, verbose_name='用户是否有效')
-	note = models.CharField(max_length=1024, default='')
+	thumbnail = models.CharField(max_length=256, default='/static/img/default_user.jpg') #用户头像
+	wip_count = models.IntegerField(default=1) #当前的wip值
 
 	class Meta(object):
 		db_table = 'account_user_profile'

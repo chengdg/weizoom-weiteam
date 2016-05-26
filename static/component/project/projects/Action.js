@@ -58,6 +58,16 @@ var Action = {
 		})
 	},
 
+	updateProject: function(project, changed) {
+		Dispatcher.dispatch({
+			actionType: Constant.PROJECT_PROJECTS_UPDATE_PROJECT,
+			data: {
+				project: project,
+				changed: changed
+			}
+		});
+	},
+
 	gotoKanban: function(projectId) {
 		Reactman.W.gotoPage('/project/kanban/?project_id='+projectId);
 	}

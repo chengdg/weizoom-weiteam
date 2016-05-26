@@ -27,6 +27,11 @@ var Store = StoreUtil.createStore(Dispatcher, {
 	},
 
 	handleUpdateRequirement: function(action) {
+		if (action.data && action.data.changed) {
+			_.each(action.data.changed, _.bind(function(value, key) {
+				this.data[key] = value;
+			}, this));
+		}
 		this.__emitChange();
 	},
 

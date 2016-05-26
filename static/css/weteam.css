@@ -157,6 +157,19 @@ html, body {
 .control-label {
 	color: #666;
 }
+.form-line:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.form-line .form-group {
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 0px;
+}
+.form-line .control-label {
+	width: auto !important;
+	padding-right: 0px;
+}
+.form-line input.form-control, .form-line select.form-control {
+	width: 120px;
+}
 .pagination input {
 	height: 20px;
 	width: 30px;

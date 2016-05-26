@@ -1,0 +1,44 @@
+.xui-account-usersPage {
+}
+.xui-account-usersPage .xui-i-user {
+    margin: 20px 20px 20px 20px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    -webkit-transition: background-color 0.8s;
+    transition: background-color 0.5s;
+}
+.xui-account-usersPage .xui-i-user:hover {
+	background-color: #FCF8E3;
+}
+.xui-account-usersPage .xui-i-user img {
+	display: block;
+	width: 100px;
+}
+.xui-account-usersPage .xui-i-user .xui-i-actionBar {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.xui-account-usersPage .xui-i-addUserTrigger {
+	border: dashed 1px #888;
+	width: 139px;
+	height: 169px;
+	cursor: pointer;
+}
+.xui-account-usersPage .xui-i-addUser {
+	width: 100px;
+	height: 120px;
+	line-height: 120px;
+	font-size: 100px;
+	color: #CFCFCF;
+}
+
+
+
+.xui-account-userDialog .col-sm-5 input {
+	width: 330px;
+}
+.xui-account-userDialog .form-horizontal .control-label {
+	width: 100px;
+}

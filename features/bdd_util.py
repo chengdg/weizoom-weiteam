@@ -2,6 +2,7 @@
 import json
 import time
 import logging
+import unittest
 
 from django.test.client import Client
 from django.http import SimpleCookie
@@ -10,7 +11,7 @@ from django.db.models import Model
 from account.models import UserProfile
 from weteam import settings
 
-tc = None
+tc = unittest.TestCase('__init__')
 
 BOUNDARY = 'BoUnDaRyStRiNg'
 MULTIPART_CONTENT = 'multipart/form-data; boundary=%s' % BOUNDARY
@@ -93,6 +94,11 @@ def login(user, password=None, **kwargs):
 def get_user_id_for(username):
 	return User.objects.get(username=username).id
 
+def get_project(user, name):
+	from project.models import Project, UserJoinProject
+	project_ids = [r.project_id for r in UserJoinProject.objects.filter(user=user, is_manager=True)]
+	return Project.objects.get(name=name, id__in=project_ids)
+
 
 
 def convert_to_same_type(a, b):
@@ -147,7 +153,6 @@ def assert_dict(expected, actual):
 				e.args = ('\n'.join(items),)
 				raise e
 
-tc = None
 
 def assert_list(expected, actual, options=None):
 	"""
