@@ -1,0 +1,50 @@
+.xui-project-membersPage {
+}
+.xui-project-membersPage .xui-i-user {
+    margin: 20px 20px 20px 20px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    -webkit-transition: background-color 0.8s;
+    transition: background-color 0.5s;
+}
+.xui-project-membersPage .xui-i-user:hover {
+	background-color: #FCF8E3;
+}
+.xui-project-membersPage .xui-i-user img {
+	display: block;
+	width: 100px;
+}
+.xui-project-membersPage .xui-i-user .xui-i-actionBar {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+.xui-project-membersPage .xui-i-addUserTrigger {
+	border: dashed 1px #888;
+	width: 139px;
+	height: 169px;
+	cursor: pointer;
+}
+.xui-project-membersPage .xui-i-addUser {
+	width: 100px;
+	height: 120px;
+	line-height: 120px;
+	font-size: 100px;
+	color: #CFCFCF;
+}
+
+
+
+.xui-project-selectMemberDialog .col-sm-5 {
+	width: 530px;
+}
+.xui-project-selectMemberDialog .xui-i-checkboxContainer {
+	width: 530px;
+}
+.xui-project-selectMemberDialog .checkbox-inline {
+	margin-left: 0px !important;
+}
+.xui-project-selectMemberDialog .form-horizontal .control-label {
+	width: 10px;
+}

@@ -18,7 +18,7 @@ import models
 from business.project.b_project_repository import BProjectRepository
 
 FIRST_NAV = 'requirement'
-COUNT_PER_PAGE = 50
+COUNT_PER_PAGE = 2
 
 class Requirements(resource.Resource):
 	app = 'project'
@@ -26,8 +26,12 @@ class Requirements(resource.Resource):
 	
 	@login_required
 	def get(request):
+		project_id = request.GET['project_id']
+		b_project = BProjectRepository.get().get_project_by_id(project_id)
+
 		frontend_data = FrontEndData()
-		frontend_data.add('projectId', request.GET['project_id'])
+		frontend_data.add('projectId', project_id)
+		frontend_data.add_user_permissions(b_project.get_user_permissions(request.user))
 		
 		c = RequestContext(request, {
 			'first_nav_name': FIRST_NAV,
@@ -39,8 +43,9 @@ class Requirements(resource.Resource):
 	@login_required
 	def api_get(request):
 		#获取业务数据
+		project_id = request.GET['project_id']
 		cur_page = request.GET.get('page', 1)
-		tasks = models.Task.objects.all()
+		tasks = models.Task.objects.filter(project_id=project_id, is_deleted=False, type=models.TASK_TYPE_REQUIREMENT)
 		tasks = db_util.filter_query_set(tasks, request)
 		tasks = tasks.order_by('-id')
 		pageinfo, tasks = paginator.paginate(tasks, cur_page, COUNT_PER_PAGE)

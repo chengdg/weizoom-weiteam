@@ -24,19 +24,25 @@ var RequirementsPage = React.createClass({
 		return Store.getData();
 	},
 
+	onChangeStore: function(event) {
+		var filterOptions = Store.getData().filterOptions;
+		this.refs.table.refresh(filterOptions);
+	},
+
 	componentDidMount: function() {
 		var $window = $(window);
 		this.dialogHeight = $window.height() - 200;
 	},
 
 	onClickDelete: function(event) {
-		var requirementId = parseInt(event.target.getAttribute('data-id'));
+		var requirementId = parseInt(event.currentTarget.getAttribute('data-id'));
 		Reactman.PageAction.showConfirm({
 			target: event.target, 
 			title: '确认删除吗?',
-			confirm: _.bind(function() {
-				Action.deleteRequirement(requirementId);
-			}, this)
+			scope: this,
+			confirm: function() {
+				Action.deleteRequirement(this.state.projectId, requirementId);
+			}
 		});
 	},
 
@@ -66,13 +72,8 @@ var RequirementsPage = React.createClass({
 		});
 	},
 
-	onChangeStore: function(event) {
-		var filterOptions = Store.getData().filterOptions;
-		this.refs.table.refresh(filterOptions);
-	},
-
 	onConfirmFilter: function(data) {
-		Action.filterProducts(data);
+		Action.filterRequirements(data);
 	},
 
 	onClickAddRequirement: function() {
@@ -96,11 +97,16 @@ var RequirementsPage = React.createClass({
 				<a onClick={this.onClickViewRequirement} className="xui-i-title" data-id={data.id}>{value}</a>
 			);
 		} else if (field === 'action') {
+			var cDeleteButton = null;
+			if (Reactman.User.hasPerm('manage_project')) {
+				cDeleteButton = (<button className="btn btn-default btn-xs" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="删除" onClick={this.onClickDelete}><i className="glyphicon glyphicon-remove"></i></button>);
+			}
+
 			return (
-			<div>
-				<button className="btn btn-default btn-xs mr5" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="进入看板" onClick={this.onClickPullToKanban}><i className="glyphicon glyphicon-list-alt"></i></button>
-				<button className="btn btn-default btn-xs" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="删除" onClick={this.onClickDelete}><i className="glyphicon glyphicon-remove"></i></button>
-			</div>
+				<div>
+					<button className="btn btn-default btn-xs mr5" data-id={data.id} data-toggle="tooltip" data-placement="top" title="" data-original-title="进入看板" onClick={this.onClickPullToKanban}><i className="glyphicon glyphicon-list-alt"></i></button>
+					{cDeleteButton}
+				</div>
 			);
 		} else {
 			return value;
@@ -148,7 +154,7 @@ var RequirementsPage = React.createClass({
 						<Reactman.FormSelect label="状态:" name="status" options={statusOptions} match="=" />
 					</Reactman.FilterField>
 					<Reactman.FilterField>
-						<Reactman.FormInput label="创建人:" name="name" match="=" />
+						<Reactman.FormInput label="需求名:" name="title" match="~" placeholder="支持部分匹配" />
 					</Reactman.FilterField>
 					<Reactman.FilterField>
 						<Reactman.FormInput label="商品名3:" name="name3" match="=" />

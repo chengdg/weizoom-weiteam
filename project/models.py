@@ -41,6 +41,7 @@ class UserJoinProject(models.Model):
 	project = models.ForeignKey(Project)
 	is_stared = models.BooleanField(default=False)
 	is_manager = models.BooleanField(default=False)
+	is_creater = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return '<%s, %s>' % (self.user.username, self.project.name)

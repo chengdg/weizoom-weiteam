@@ -13,15 +13,16 @@ var Resource = Reactman.Resource;
 var Constant = require('./Constant');
 
 var Action = {
-	deleteRequirement: function(requirementId) {
+	deleteRequirement: function(projectId, requirementId) {
 		Resource.delete({
 			resource: 'project.requirement',
 			data: {
-				id: requirementId
+				project_id: projectId,
+				requirement_id: requirementId
 			},
 			dispatch: {
 				dispatcher: Dispatcher,
-				actionType: Constant.OUTLINE_DATAS_UPDATE_PRODUCT
+				actionType: Constant.PROJECT_REQUIREMENTS_DELETE_REQUIREMENT
 			}
 		});
 	},
@@ -47,7 +48,7 @@ var Action = {
 
 	filterRequirements: function(filterOptions) {
 		Dispatcher.dispatch({
-			actionType: Constant.OUTLINE_DATAS_FILTER_PRODUCTS,
+			actionType: Constant.PROJECT_REQUIREMENTS_FILTER_REQUIREMENTS,
 			data: filterOptions
 		});
 	},

@@ -8,3 +8,6 @@ import kanban
 import requirement
 import requirements
 import task
+import members
+import member
+import candidate_members

@@ -63,7 +63,7 @@ def top_navs(request):
 			'name': 'member',
 			'displayName': '成员',
 			'icon': 'fa-users',
-			'href': '#'
+			'href': '/project/members/?project_id='+project_id
 		}, {
 			'name': 'config',
 			'displayName': '配置',

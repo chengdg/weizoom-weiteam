@@ -17,6 +17,7 @@ var Constant = require('./Constant');
 var Store = StoreUtil.createStore(Dispatcher, {
 	actions: {
 		'handleUpdateRequirement': Constant.PROJECT_REQUIREMENTS_UPDATE_REQUIREMENT,
+		'handleDeleteRequirement': Constant.PROJECT_REQUIREMENTS_DELETE_REQUIREMENT,
 		'handleFilterRequirements': Constant.PROJECT_REQUIREMENTS_FILTER_REQUIREMENTS,
 	},
 
@@ -32,6 +33,10 @@ var Store = StoreUtil.createStore(Dispatcher, {
 				this.data[key] = value;
 			}, this));
 		}
+		this.__emitChange();
+	},
+
+	handleDeleteRequirement: function() {
 		this.__emitChange();
 	},
 

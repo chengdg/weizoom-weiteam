@@ -47,7 +47,8 @@ class BProject(business_model.Model):
 		project_models.UserJoinProject.objects.create(
 			user = owner,
 			project = project,
-			is_manager = True
+			is_manager = True,
+			is_creater = True
 		)
 
 		BStage.create_default_stages(project)
@@ -66,6 +67,28 @@ class BProject(business_model.Model):
 		project_models.Project.objects.filter(id=self.id).update(is_deleted=True)
 
 	@property
+	def creater(self):
+		"""
+		project的创建者
+		"""
+		user_join_project = project_models.UserJoinProject.objects.get(project_id=self.id, is_creater=True)
+		return auth_models.User.objects.get(id=user_join_project.user_id)
+
+	def is_creater(self, user):
+		"""
+		判断user是否是project的creater
+		"""
+		user_join_project = project_models.UserJoinProject.objects.get(project_id=self.id, is_creater=True)
+		return user.id == user_join_project.user_id
+
+	def is_manager(self, user):
+		"""
+		判断user是否是project的manager
+		"""
+		user_join_project = project_models.UserJoinProject.objects.get(project_id=self.id, is_manager=True)
+		return user.id == user_join_project.user_id
+
+	@property
 	def status(self):
 		group_name = self.charge_group.name
 		if group_name == 'SystemManager':
@@ -76,6 +99,39 @@ class BProject(business_model.Model):
 			return u'微众家服务中'
 		else:
 			return u'未知'
+
+	@property
+	def members(self):
+		joined_infos = [r for r in project_models.UserJoinProject.objects.filter(project_id=self.id)]
+		joined_member_ids = [info.user_id for info in joined_infos]
+		user2info = dict([(info.user_id, info) for info in joined_infos])
+
+		users = list(auth_models.User.objects.filter(id__in=joined_member_ids, is_active=True))
+		members = []
+		for user in users:
+			user.name = user.first_name
+			join_info = user2info[user.id]
+			user.is_manager = join_info.is_manager
+			user.join_time = join_info.id
+			profile = user.get_profile()
+			user.thumbnail = profile.thumbnail
+			members.append(user)
+		members.sort(lambda x,y: cmp(y.join_time, x.join_time))
+
+		return members
+
+	@property
+	def candidate_members(self):
+		users = list(auth_models.User.objects.filter(id__gt=3, is_active=True))
+		joined_members = set([r.user_id for r in project_models.UserJoinProject.objects.filter(project_id=self.id)])
+
+		members = []
+		for user in users:
+			if not user.id in joined_members:
+				user.name = user.first_name
+				members.append(user)
+
+		return members
 
 	def update(self, name, description):
 		"""
@@ -103,3 +159,36 @@ class BProject(business_model.Model):
 		options['iteration_id'] = BIterationRepository.get().get_default_iteration(self.id).id
 		options['stage_id'] = BStageRepository.get().get_default_stage(self.id).id
 		BTask.create_requirement(options)
+
+	def add_members(self, user_ids):
+		"""
+		添加一组用户作为project的成员
+		"""
+		for user_id in user_ids:
+			project_models.UserJoinProject.objects.create(
+				user_id = user_id,
+				project_id = self.id
+			)
+
+	def delete_member(self, member_id):
+		"""
+		从project中删除一个成员
+		"""
+		project_models.UserJoinProject.objects.filter(project_id=self.id, user_id=member_id).delete()
+
+	def get_user_permissions(self, user):
+		"""
+		填充用户操作project的权限
+		"""
+		user_join_project = project_models.UserJoinProject.objects.get(project_id=self.id, user_id=user.id)
+		permissions = []
+		if user_join_project.is_manager:
+			permissions.append('manage_project')
+
+		return permissions
+
+	def delete_requirement(self, requirement_id):
+		"""
+		删除需求
+		"""
+		project_models.Task.objects.filter(id=requirement_id).update(is_deleted=True)
