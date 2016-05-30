@@ -24,8 +24,10 @@
 {% block base_js %}
 <script type="text/javascript">
 	W.userName = "{{ request.user.first_name }}";
-	W.topNavs = W.loadJSON('topNavs');
+	W.topNavs = W.loadJSON('topNavs');	
 	W.activeTopNav = "{{ first_nav_name }}";
+	W.secondNavs = W.loadJSON('secondNavs');
+	W.activeSecondNav = {% if second_nav_name %}"{{ second_nav_name }}"{% else %}null{% endif %};
 </script>
 {% block js %}{% endblock %}
 {% endblock %}

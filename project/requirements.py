@@ -35,6 +35,8 @@ class Requirements(resource.Resource):
 		
 		c = RequestContext(request, {
 			'first_nav_name': FIRST_NAV,
+			'second_navs': nav.get_requirement_second_navs(),
+			'second_nav_name': 'project-rd-requirements', 
 			'frontend_data': frontend_data
 		})
 		

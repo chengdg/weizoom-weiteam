@@ -152,6 +152,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'project',
+    'requirement',
     'account',
     'resource',
 

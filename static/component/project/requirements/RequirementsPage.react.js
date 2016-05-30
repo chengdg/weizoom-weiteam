@@ -79,7 +79,7 @@ var RequirementsPage = React.createClass({
 	onClickAddRequirement: function() {
 		var projectId = this.state.projectId;
 		Reactman.PageAction.showDialog({
-			title: "新建需求", 
+			title: "新建故事", 
 			type: 'large',
 			component: NewRequirementDialog, 
 			data: {
@@ -154,21 +154,20 @@ var RequirementsPage = React.createClass({
 						<Reactman.FormSelect label="状态:" name="status" options={statusOptions} match="=" />
 					</Reactman.FilterField>
 					<Reactman.FilterField>
-						<Reactman.FormInput label="需求名:" name="title" match="~" placeholder="支持部分匹配" />
+						<Reactman.FormInput label="故事名:" name="title" match="~" placeholder="支持部分匹配" />
 					</Reactman.FilterField>
 					<Reactman.FilterField>
-						<Reactman.FormInput label="商品名3:" name="name3" match="=" />
 					</Reactman.FilterField>
 				</Reactman.FilterRow>
 			</Reactman.FilterPanel>
 
 			<Reactman.TablePanel>
 				<Reactman.TableActionBar>
-					<Reactman.TableActionButton text="添加需求" icon="plus" onClick={this.onClickAddRequirement} />
+					<Reactman.TableActionButton text="添加故事" icon="plus" onClick={this.onClickAddRequirement} />
 				</Reactman.TableActionBar>
 				<Reactman.Table resource={resource} formatter={this.rowFormatter} pagination={true} ref="table">
 					<Reactman.TableColumn name="#" field="index" width="40px" />
-					<Reactman.TableColumn name="需求" field="title" />
+					<Reactman.TableColumn name="用户故事" field="title" />
 					<Reactman.TableColumn name="标签" field="tags" width="100px" />
 					<Reactman.TableColumn name="重要度" field="importance" width="70px"/>
 					<Reactman.TableColumn name="故事点" field="storyPoint" width="70px"/>

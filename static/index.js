@@ -27,6 +27,8 @@ $(document).ready(function() {
 			userName={W.userName}
 			topNavs={W.topNavs} 
 			activeTopNav={W.activeTopNav} 
+			secondNavs={W.secondNavs}
+			activeSecondNav={W.activeSecondNav}
 			pageContentComponent={W.pageContentComponent}
 		></Page>, 
 	pageNode);

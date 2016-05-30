@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 __author__ = 'robert'
 
-SECOND_NAVS = [{
-	'name': 'outline-outline',
-	'displayName': '统计概况',
-	'href': '/outline/outline/'
+REQUIREMENT_SECOND_NAVS = [{
+	'name': 'project-rd-requirements',
+	'displayName': '用户故事',
+	'href': '/project/requirements/'
 }, {
-	'name': 'outline-product',
-	'displayName': '商品数据',
-	'href': '/outline/datas/'
+	'name': 'project-project-requirements',
+	'displayName': '产品需求',
+	'href': '/project/project_requirements/'
 }, {
-	'name': 'outline-3',
-	'displayName': '统计概况3',
-	'href': '#'
+	'name': 'project-business-requirements',
+	'displayName': '业务需求',
+	'href': '/project/business_requirements/'
 }]
 
-def get_second_navs():
-	return SECOND_NAVS
+def get_requirement_second_navs():
+	return REQUIREMENT_SECOND_NAVS

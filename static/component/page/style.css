@@ -1,0 +1,20 @@
+/**
+ * navbar 样式
+ */
+.xui-topNavbar {
+    background-color: #FEFEFE;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
+    border: none;
+}
+.xui-topNavbar .nav > li > a {
+    /*font-weight: 600;*/
+    /*padding: 15px 20px 15px 25px;*/
+}
+
+.xui-secondNav {
+    background-color: #DCDCDC;
+    padding: 5px 10px 5px 15px;
+}
+.xui-secondNav .nav > li > a {
+    padding: 5px 10px;
+}

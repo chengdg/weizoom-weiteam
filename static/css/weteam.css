@@ -63,62 +63,6 @@ html, body {
 
 
 /**
- * navbar 样式
- */
-.xui-navbar {
-	background-color: #FEFEFE;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), 0 -1px 0 rgba(0, 0, 0, 0.1) inset;
-    border: none;
-}
-.xui-navbar .nav > li > a {
-    /*font-weight: 600;*/
-    /*padding: 15px 20px 15px 25px;*/
-}
-
-
-/**
- * second nav样式
- */
-.xui-secondNav {
-	width: 220px;
-	position: fixed;
-	top: 50px;
-	left: 0px;
-}
-.xui-secondNav .nav > li > a {
-    color: #a7b1c2;
-    font-weight: 600;
-    padding: 14px 20px 14px 25px;
-}
-.xui-secondNav .nav > li.active {
-	background: #293846 none repeat scroll 0 0;
-    border-left: 4px solid #19aa8d;
-}
-.xui-secondNav .nav-pills>li.active>a {
-	color:#FFF;
-	border-radius: 0px;
-}
-.xui-secondNav .nav-pills>li.active>a:hover {
-	color:#FFF;
-	border-radius: 0px;
-}
-.xui-secondNav .nav-pills > li.active > a, 
-.xui-secondNav .nav-pills > li.active > a:hover, 
-.xui-secondNav .nav-pills > li.active > a:focus {
-	background-color: transparent;
-}
-.xui-secondNav .nav > li > a:hover,
-.xui-secondNav .nav > li > a:focus {
-	background-color: #293846;
-	text-decoration: none;
-	color: #FFF;
-}
-.xui-secondNav .nav-stacked > li + li {
-	margin-top: 0px;
-}
-
-
-/**
  * content区域样式
  */
 .xui-contentPanel {

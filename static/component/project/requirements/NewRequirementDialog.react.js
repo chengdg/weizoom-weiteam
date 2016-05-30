@@ -39,7 +39,7 @@ var NewRequirementDialog = Reactman.createDialog({
 				this.closeDialog();
 			},
 			error: function() {
-				Reactman.PageAction.showHint('error', '创建需求失败!');
+				Reactman.PageAction.showHint('error', '创建用户故事失败!');
 			},
 			scope: this
 		})
@@ -67,9 +67,9 @@ var NewRequirementDialog = Reactman.createDialog({
 		<div className="xui-formPage xui-project-newRequirementDialog">
 			<form className="form-horizontal mt15">
 				<fieldset>
-					<Reactman.FormInput label="需求名:" name="title" validate="require-string" value={this.state.title} onChange={this.onChange} autoFocus={true} inDialog={true} />
+					<Reactman.FormInput label="故事名:" name="title" validate="require-string" value={this.state.title} onChange={this.onChange} autoFocus={true} inDialog={true} />
 					<Reactman.FormSelect label="重要度:" name="importance" options={importanceOptions} value={this.state.importance} />
-					<Reactman.FormRichTextInput label="需求详情:" name="content" validate="require-string" value={this.state.content} onChange={this.onChange} width={730} height={300}/>
+					<Reactman.FormRichTextInput label="故事详情:" name="content" validate="require-string" value={this.state.content} onChange={this.onChange} width={730} height={300}/>
 				</fieldset>
 			</form>
 		</div>

@@ -49,6 +49,13 @@ def init_weteam(app, created_models, verbosity, **kwargs):
 	permission = Permission.objects.create(name="业务人员权限", codename="__manage_bu", content_type=ctype)
 	g.permissions.add(permission)
 
+	#创建默认的project，用于接收全局的业务需求和产品需求
+	from project.models import Project
+	Project.objects.create(
+		name = 'default_project',
+		description = 'default_project'
+	)
+
 	print "Install custom permission groups for weteam successfully"
 
 

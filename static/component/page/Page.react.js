@@ -8,8 +8,11 @@ var debug = require('debug')('m:page.Page');
 
 var Reactman = require('reactman');
 var TopNav = require('./TopNav.react');
+var SecondNav = require('./SecondNav.react');
 
 var dynamicRequire = require('../dynamic_require');
+
+require('./style.css');
 
 var Page = React.createClass({
 	getInitialState: function() {
@@ -44,6 +47,11 @@ var Page = React.createClass({
 		if (pageContentComponent.topNavActionsComponent) {
 			cTopNavActions = React.createElement(pageContentComponent.topNavActionsComponent, {});
 		}
+
+		var cSecondNavs = null;
+		if (this.props.secondNavs) {
+			cSecondNavs = <SecondNav navs={this.props.secondNavs} activeNav={this.props.activeSecondNav} />
+		}
 		return (
 		<div>
 			<Reactman.Confirm data={this.state.confirm} />
@@ -56,6 +64,7 @@ var Page = React.createClass({
 			</TopNav>
 			<div id="main-panel">
 				<div className="xui-contentPanel mt50">
+					{cSecondNavs}
 					<div className="xui-container" >
 						{pageContent}
 					</div>

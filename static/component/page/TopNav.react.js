@@ -37,7 +37,7 @@ var TopNav = React.createClass({
 
 		return (
 			<div id="header">
-				<nav className="navbar navbar-default navbar-fixed-top xui-navbar">
+				<nav className="navbar navbar-default navbar-fixed-top xui-topNavbar">
 					<div className="container-fluid">
 						<div className="navbar-header mr20">
 							<a className="navbar-brand" href="/">{this.props.name}</a>
