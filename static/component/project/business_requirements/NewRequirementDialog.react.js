@@ -3,26 +3,19 @@
  */
 "use strict";
 
-var debug = require('debug')('m:project.projects:NewProjectDialog');
+var debug = require('debug')('m:project.business_requirements:NewRequirementDialog');
 var React = require('react');
 var ReactDOM = require('react-dom');
 
 var Reactman = require('reactman');
 
-// var Store = require('./Store');
-// var Constant = require('./Constant');
-var Action = require('./Action');
 
 var NewRequirementDialog = Reactman.createDialog({
 	getInitialState: function() {
-		var defaultContent = '';
-		if (this.props.type === 'requirement') {
-			defaultContent = '我作为:（角色）<br/><br/><br/>想要：（功能）<br/><br/><br/>以实现：（商业价值）';
-		}
 		return {
 			title: '',
 			importance: '3',
-			content: defaultContent
+			content: ''
 		};
 	},
 
@@ -37,18 +30,8 @@ var NewRequirementDialog = Reactman.createDialog({
 		var data = _.clone(this.state);
 		data['project_id'] = this.props.data.projectId;
 
-		var resource = 'project.requirement';
-		if (this.props.type === 'business-requirement') {
-			resource = 'project.business_requirement'
-		} else if (this.props.type === 'product-requirement') {
-			resource = 'project.product_requirement'
-		}
-
-		alert(resource);
-		return;
-
 		Reactman.Resource.put({
-			resource: resource,
+			resource: 'project.business_requirement',
 			data: data,
 			success: function() {
 				this.closeDialog();
@@ -86,11 +69,11 @@ var NewRequirementDialog = Reactman.createDialog({
 		}
 
 		return (
-		<div className="xui-formPage xui-project-newRequirementDialog">
+		<div className="xui-formPage xui-project-newBusinessRequirementDialog">
 			<form className="form-horizontal mt15">
 				<fieldset>
 					<Reactman.FormInput label={titleLabel} name="title" validate="require-string" value={this.state.title} onChange={this.onChange} autoFocus={true} inDialog={true} />
-					<Reactman.FormSelect label="重要度:" name="importance" options={importanceOptions} value={this.state.importance} />
+					<Reactman.FormSelect label="重要度:" name="importance" options={importanceOptions} value={this.state.importance} onChange={this.onChange} />
 					<Reactman.FormRichTextInput label={contentLabel} name="content" validate="require-string" value={this.state.content} onChange={this.onChange} width={730} height={300}/>
 				</fieldset>
 			</form>

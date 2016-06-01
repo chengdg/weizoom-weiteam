@@ -19,6 +19,9 @@ from project.models import Project
 REQUIREMENT_TYPE_BUSINESS = 0
 REQUIREMENT_TYPE_PRODUCT = 1
 REQUIREMENT_TYPE_RD = 2
+REQUIREMENT_STATUS_TODO = 0
+REQUIREMENT_STATUS_DOING = 1
+REQUIREMENT_STATUS_DONE = 2
 class Requirement(models.Model):
 	"""
 	需求
@@ -30,6 +33,7 @@ class Requirement(models.Model):
 	enter_todo_date = models.DateTimeField(default='2000-01-01 00:00:00') #任务进入todo时间
 	finish_date = models.DateTimeField(auto_now_add=True) #任务结束时间
 	type = models.IntegerField() #需求类型
+	status = models.IntegerField(default=0) #需求状态
 	story_point = models.IntegerField(default=0) #故事点数
 	importance = models.IntegerField(default=1) #需求重要度
 	index = models.IntegerField(default=0)

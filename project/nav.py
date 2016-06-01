@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 __author__ = 'robert'
 
+import copy
+
 REQUIREMENT_SECOND_NAVS = [{
 	'name': 'project-rd-requirements',
 	'displayName': '用户故事',
@@ -15,5 +17,8 @@ REQUIREMENT_SECOND_NAVS = [{
 	'href': '/project/business_requirements/'
 }]
 
-def get_requirement_second_navs():
-	return REQUIREMENT_SECOND_NAVS
+def get_requirement_second_navs(project_id):
+	navs = copy.deepcopy(REQUIREMENT_SECOND_NAVS)
+	for nav in navs:
+		nav['href'] = nav['href'] + (u'?project_id=%s' % project_id)
+	return navs

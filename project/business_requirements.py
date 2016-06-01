@@ -20,9 +20,9 @@ from business.project.b_project_repository import BProjectRepository
 FIRST_NAV = 'requirement'
 COUNT_PER_PAGE = 2
 
-class Requirements(resource.Resource):
+class BusinessRequirements(resource.Resource):
 	app = 'project'
-	resource = 'requirements'
+	resource = 'business_requirements'
 	
 	@login_required
 	def get(request):
@@ -36,33 +36,31 @@ class Requirements(resource.Resource):
 		c = RequestContext(request, {
 			'first_nav_name': FIRST_NAV,
 			'second_navs': nav.get_requirement_second_navs(project_id),
-			'second_nav_name': 'project-rd-requirements', 
+			'second_nav_name': 'project-business-requirements', 
 			'frontend_data': frontend_data
 		})
 		
-		return render_to_response('project/requirements.html', c)
+		return render_to_response('project/business_requirements.html', c)
 
 	@login_required
 	def api_get(request):
-		#获取业务数据
 		project_id = request.GET['project_id']
-		cur_page = request.GET.get('page', 1)
-		tasks = models.Task.objects.filter(project_id=project_id, is_deleted=False, type=models.TASK_TYPE_REQUIREMENT)
-		tasks = db_util.filter_query_set(tasks, request)
-		tasks = tasks.order_by('-id')
-		pageinfo, tasks = paginator.paginate(tasks, cur_page, COUNT_PER_PAGE)
+		b_project = BProjectRepository.get().get_project_by_id(project_id)
 
+		cur_page = request.GET.get('page', 1)
+		pageinfo, requirements = b_project.get_business_requirements(cur_page, request.GET)
+		
 		#组装数据
 		rows = []
-		for task in tasks:
+		for requirement in requirements:
 			rows.append({
-				'id': task.id,
-				'title': task.title,
-				'importance': task.importance,
-				'storyPoint': task.story_point,
-				'creater': task.creater.first_name,
-				'tags': [],
-				'createdAt': task.created_at.strftime('%Y.%m.%d')
+				'id': requirement.id,
+				'title': requirement.title,
+				'importance': requirement.importance,
+				'creater': requirement.creater.first_name,
+				'subRequirements': 0,
+				'storyPoint': 0,
+				'createdAt': requirement.created_at.strftime('%Y.%m.%d')
 			})
 		data = {
 			'rows': rows,
