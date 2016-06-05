@@ -14,6 +14,12 @@ var Page = require('./component/page/Page.react');
 
 window.Debug = require("debug");
 
+window.xlog = function(msg) {
+	if (window.console) {
+		window.console.log(msg);
+	}
+}
+
 $(document).ready(function() {
 	Debug.enable("reactman:*,m:*");
 

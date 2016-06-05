@@ -55,12 +55,17 @@ class Requirements(resource.Resource):
 		#组装数据
 		rows = []
 		for task in tasks:
+			task_creater = task.creater
 			rows.append({
 				'id': task.id,
 				'title': task.title,
 				'importance': task.importance,
 				'storyPoint': task.story_point,
-				'creater': task.creater.first_name,
+				'creater': {
+					"id": task_creater.id,
+					"name": task_creater.name,
+					"thumbnail": task_creater.thumbnail
+				},
 				'tags': [],
 				'createdAt': task.created_at.strftime('%Y.%m.%d')
 			})

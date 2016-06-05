@@ -20,3 +20,13 @@
 .xui-project-editBusinessRequirementDialog .xui-i-bar {
 	background-color: #EFEFEF;
 }
+.xui-project-editBusinessRequirementDialog .xui-i-actionArea label {
+	display: none;
+}
+.xui-project-editBusinessRequirementDialog .xui-i-actionArea .form-group {
+	margin-right: 0px;
+	margin-left: 0px !important;
+}
+.xui-project-editBusinessRequirementDialog .xui-i-actionArea .col-sm-5 {
+	padding-left: 0px;
+}

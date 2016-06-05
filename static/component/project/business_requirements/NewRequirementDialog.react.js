@@ -61,20 +61,13 @@ var NewRequirementDialog = Reactman.createDialog({
 			value: '5'
 		}];
 
-		var titleLabel = "故事名:";
-		var contentLabel = "故事详情:";
-		if (this.props.type !== 'requirement') {
-			titleLabel = "需求名:";
-			contentLabel = "需求详情:";
-		}
-
 		return (
 		<div className="xui-formPage xui-project-newBusinessRequirementDialog">
 			<form className="form-horizontal mt15">
 				<fieldset>
-					<Reactman.FormInput label={titleLabel} name="title" validate="require-string" value={this.state.title} onChange={this.onChange} autoFocus={true} inDialog={true} />
+					<Reactman.FormInput label="需求名:" name="title" validate="require-string" value={this.state.title} onChange={this.onChange} autoFocus={true} inDialog={true} />
 					<Reactman.FormSelect label="重要度:" name="importance" options={importanceOptions} value={this.state.importance} onChange={this.onChange} />
-					<Reactman.FormRichTextInput label={contentLabel} name="content" validate="require-string" value={this.state.content} onChange={this.onChange} width={730} height={300}/>
+					<Reactman.FormRichTextInput label="需求详情:" name="content" validate="require-string" value={this.state.content} onChange={this.onChange} width={730} height={300}/>
 				</fieldset>
 			</form>
 		</div>

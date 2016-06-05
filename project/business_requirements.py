@@ -16,6 +16,7 @@ from util import db_util
 import nav
 import models
 from business.project.b_project_repository import BProjectRepository
+from business.project.b_requirement_repository import BRequirementRepository
 
 FIRST_NAV = 'requirement'
 COUNT_PER_PAGE = 2
@@ -48,19 +49,24 @@ class BusinessRequirements(resource.Resource):
 		b_project = BProjectRepository.get().get_project_by_id(project_id)
 
 		cur_page = request.GET.get('page', 1)
-		pageinfo, requirements = b_project.get_business_requirements(cur_page, request.GET)
+		pageinfo, b_requirements = b_project.get_business_requirements(cur_page, request.GET)
 		
 		#组装数据
 		rows = []
-		for requirement in requirements:
+		for b_requirement in b_requirements:
+			creater = b_requirement.creater
 			rows.append({
-				'id': requirement.id,
-				'title': requirement.title,
-				'importance': requirement.importance,
-				'creater': requirement.creater.first_name,
+				'id': b_requirement.id,
+				'title': b_requirement.title,
+				'importance': b_requirement.importance,
+				'creater': {
+					"id": creater.id,
+					"name": creater.name,
+					"thumbnail": creater.thumbnail
+				},
 				'subRequirements': 0,
 				'storyPoint': 0,
-				'createdAt': requirement.created_at.strftime('%Y.%m.%d')
+				'createdAt': b_requirement.created_at.strftime('%Y.%m.%d')
 			})
 		data = {
 			'rows': rows,

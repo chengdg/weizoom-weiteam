@@ -34,7 +34,10 @@ def filter_query_set(query_set, filter_options, filter2field=None):
 		#filter_options是一个request对象
 		filter_options = filter_options.GET
 
-	filters = dict([(get_filter_key(key, filter2field), get_filter_value(key, filter_options)) for key in filter_options if key.startswith('__f-')])
+	if not filter_options:
+		filters = None
+	else:
+		filters = dict([(get_filter_key(key, filter2field), get_filter_value(key, filter_options)) for key in filter_options if key.startswith('__f-')])
 
 	if not filters:
 		return query_set

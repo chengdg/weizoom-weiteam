@@ -6,3 +6,5 @@ import b_project_repository
 import b_iteration
 import b_stage
 import b_task
+import b_requirement
+import b_requirement_repository

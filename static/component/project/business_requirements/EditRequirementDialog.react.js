@@ -10,6 +10,7 @@ var ReactDOM = require('react-dom');
 var Reactman = require('reactman');
 
 var Action = require('./Action');
+var CommentList = require('../requirements/CommentList.react');
 
 var EditRequirementDialog = Reactman.createDialog({
 	getInitialState: function() {
@@ -18,6 +19,7 @@ var EditRequirementDialog = Reactman.createDialog({
 			id: null,
 			content: '',
 			importance: -1,
+			comments: [],
 			changed: {}
 		};
 	},
@@ -73,7 +75,7 @@ var EditRequirementDialog = Reactman.createDialog({
 			importanceOptions = [{
 				text: '加载中...',
 				value: '-1'
-			}]
+			}];
 		}
 
 		return (
@@ -83,6 +85,8 @@ var EditRequirementDialog = Reactman.createDialog({
 					<Reactman.FormSelect label="重要度:" name="importance" options={importanceOptions} value={this.state.importance} onChange={this.onChange} />
 				</div>
 				<div className="xui-i-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
+
+				<CommentList value={this.state.comments} width={this.props.dialogSize.width} />
 			</form>
 		</div>
 		)

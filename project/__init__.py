@@ -6,6 +6,7 @@ import project
 import stared_project
 import kanban
 import requirement
+import requirement_comment
 import requirements
 import business_requirements
 import business_requirement

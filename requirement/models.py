@@ -44,3 +44,16 @@ class Requirement(models.Model):
 
 	class Meta(object):
 		db_table = 'requirement_requirement'
+
+
+class RequirementComment(models.Model):
+	"""
+	需求评论
+	"""
+	creater = models.ForeignKey(User)
+	requirement = models.ForeignKey(Requirement, related_name='comments')
+	content = models.TextField() #任务详情
+	created_at = models.DateTimeField(auto_now_add=True)
+
+	class Meta(object):
+		db_table = 'requirement_comment'

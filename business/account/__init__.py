@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
 __author__ = 'robert'
 
-import project
-import account
+import b_user

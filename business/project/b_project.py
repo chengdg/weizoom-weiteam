@@ -17,6 +17,7 @@ from business.project.b_iteration import BIteration
 from business.project.b_iteration_repository import BIterationRepository
 from business.project.b_stage import BStage
 from business.project.b_stage_repository import BStageRepository
+from business.project.b_requirement_repository import BRequirementRepository
 from business.project.b_task import BTask
 from util import db_util
 from core import paginator
@@ -201,26 +202,7 @@ class BProject(business_model.Model):
 		"""
 		获取project的业务需求集合
 		"""
-		requirements = requirement_models.Requirement.objects.filter(project_id=self.id, is_deleted=False, type=requirement_models.REQUIREMENT_TYPE_BUSINESS)
-		requirements = db_util.filter_query_set(requirements, filter_options)
-		requirements = requirements.order_by('-id')
-		pageinfo, requirements = paginator.paginate(requirements, page, COUNT_PER_PAGE)
-
-		#批量填充creater
-		creater_ids = [requirement.creater_id for requirement in requirements]
-		id2user = dict([(user.id, user) for user in auth_models.User.objects.filter(id__in=creater_ids)])
-		for requirement in requirements:
-			requirement.creater = id2user[requirement.creater_id]
-
-		return pageinfo, requirements
-
-	def get_business_requirement(self, requirement_id):
-		"""
-		获取project中指定的业务需求
-		"""
-		requirement = requirement_models.Requirement.objects.get(id=requirement_id, is_deleted=False, type=requirement_models.REQUIREMENT_TYPE_BUSINESS)
-
-		return requirement
+		return BRequirementRepository.get().get_project_business_requirements(self.id, page, filter_options)
 
 	def add_business_requirement(self, options):
 		"""
@@ -236,19 +218,3 @@ class BProject(business_model.Model):
 		)
 
 		return requirement
-
-	def delete_business_requirement(self, requirement_id):
-		"""
-		删除project中requirement_id指定的business_requirment
-		"""
-		requirement_models.Requirement.objects.filter(id=requirement_id).update(is_deleted=True)
-
-	def update_business_requirement(self, requirement_id, field, value):
-		"""
-		更新business_requirement的属性
-		"""
-		options = {
-			field: value
-		}
-		requirement_models.Requirement.objects.filter(id=requirement_id).update(**options)
-		return True

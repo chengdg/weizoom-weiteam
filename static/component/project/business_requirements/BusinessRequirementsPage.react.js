@@ -39,6 +39,7 @@ var BusinessRequirementsPage = React.createClass({
 	componentDidMount: function() {
 		var $window = $(window);
 		this.dialogHeight = $window.height() - 200;
+		this.dialogWidth = $window.width() - 50;
 	},
 
 	onClickDelete: function(event) {
@@ -68,6 +69,7 @@ var BusinessRequirementsPage = React.createClass({
 			title: requirement.title, 
 			type: 'large',
 			height: this.dialogHeight,
+			width: this.dialogWidth,
 			component: EditRequirementDialog, 
 			data: {
 				projectId: projectId,
@@ -112,6 +114,11 @@ var BusinessRequirementsPage = React.createClass({
 				<span>
 					<span className="label label-success">{value}({data.subRequirements})</span>
 				</span>
+			)
+		} else if (field == 'creater') {
+			var user = value;
+			return (
+				<span>{user.name}</span>
 			)
 		} else if (field === 'action') {
 			return (
