@@ -30,10 +30,11 @@ random.seed(time.time())
 #===============================================================================
 # index : 用户首页
 #===============================================================================
-@login_required(login_url='/login/')
 def index(request):
-	return HttpResponseRedirect('/apps/powerme/powermes/')
-
+	if request.user.is_authenticated():
+		return HttpResponseRedirect('/project/projects/')
+	else:
+		return HttpResponseRedirect('/account/login/')
 
 #===============================================================================
 # show_error_page : 错误页面
