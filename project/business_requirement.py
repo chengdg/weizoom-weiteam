@@ -15,6 +15,8 @@ import nav
 import models
 from resource import models as resource_models
 from util import string_util
+from business.project.b_requirement import BRequirement
+from business.project.b_requirement_repository import BRequirementRepository
 from business.project.b_project import BProject
 from business.project.b_project_repository import BProjectRepository
 
@@ -32,17 +34,31 @@ class BusinessRequirement(resource.Resource):
 	def api_get(request):
 		project_id = request.GET['project_id']
 		requirement_id = request.GET['requirement_id']
-		b_project = BProjectRepository.get().get_project_by_id(project_id)
-		requirement = b_project.get_business_requirement(requirement_id)
+		b_requirement = BRequirementRepository.get().get_requirement(project_id, requirement_id)
 		
 		response = create_response(200)
+		comments = []
+		for b_comment in b_requirement.comments:
+			comments.append({
+				"id": b_comment.id,
+				"content": b_comment.content,
+				"creater": {
+					"name": b_comment.creater.name,
+					"thumbnail": b_comment.creater.thumbnail
+				},
+				"createdAt": b_comment.created_at.strftime("%Y-%m-%d %H:%M"),
+			})
 		response.data = {
-			"id": requirement.id,
-			"importance": requirement.importance,
-			"title": requirement.title,
-			"content": requirement.content,
-			"createdAt": requirement.created_at.strftime("%Y-%m-%d %H:%M"),
-			"creater": requirement.creater.first_name
+			"id": b_requirement.id,
+			"importance": b_requirement.importance,
+			"title": b_requirement.title,
+			"content": b_requirement.content,
+			"createdAt": b_requirement.created_at.strftime("%Y-%m-%d %H:%M"),
+			"comments": comments,
+			"creater": {
+				"name": b_requirement.creater.name,
+				"thumbnail": b_requirement.creater.thumbnail
+			}
 		}
 		return response.get_response()
 	
@@ -84,7 +100,7 @@ class BusinessRequirement(resource.Resource):
 		project_id = request.POST['project_id']
 		requirement_id = request.POST['requirement_id']
 		b_project = BProjectRepository.get().get_project_by_id(project_id)
-		b_project.delete_business_requirement(requirement_id)
+		b_project.delete_requirement(requirement_id)
 
 		response = create_response(200)
 		return response.get_response()

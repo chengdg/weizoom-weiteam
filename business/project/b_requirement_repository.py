@@ -36,6 +36,12 @@ class BRequirementRepository(business_model.Model):
 
 		return BRequirement.from_model(db_model)
 
+	def delete_requirement(self, project_id, requirement_id):
+		"""
+		删除指定的requirement
+		"""
+		requirement_models.Requirement.objects.filter(project_id=project_id, id=requirement_id).update(is_deleted=True)
+
 	def __get_requirements(self, project_id, type, page, filter_options):
 		"""
 		获取需求集合

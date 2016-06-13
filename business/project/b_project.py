@@ -18,6 +18,7 @@ from business.project.b_iteration_repository import BIterationRepository
 from business.project.b_stage import BStage
 from business.project.b_stage_repository import BStageRepository
 from business.project.b_requirement_repository import BRequirementRepository
+from business.project.b_requirement import BRequirement
 from business.project.b_task import BTask
 from util import db_util
 from core import paginator
@@ -196,7 +197,7 @@ class BProject(business_model.Model):
 		"""
 		删除需求
 		"""
-		project_models.Task.objects.filter(id=requirement_id).update(is_deleted=True)
+		BRequirementRepository.get().delete_requirement(self.id, requirement_id)
 
 	def get_business_requirements(self, page, filter_options=None):
 		"""
@@ -208,13 +209,5 @@ class BProject(business_model.Model):
 		"""
 		向project中添加business_requirment
 		"""
-		requirement = requirement_models.Requirement.objects.create(
-			project_id = self.id,
-			creater = options['owner'],
-			title = options['title'],
-			content = options['content'],
-			type = requirement_models.REQUIREMENT_TYPE_BUSINESS,
-			importance = options['importance']
-		)
-
-		return requirement
+		options['project_id'] = self.id
+		return BRequirement.create_business_requirement(options)

@@ -14,6 +14,7 @@ from business.decorator import cached_context_property
 from requirement import models as requirement_models
 from account import models as account_models
 from business.account.b_user_repository import BUserRepository
+from business.project.b_requirement_comment import BRequirementComment
 
 class BRequirement(business_model.Model):
 	__slots__ = (
@@ -67,7 +68,7 @@ class BRequirement(business_model.Model):
 		self.context['db_model'] = model
 
 		if fill_creater:
-			self.creater = BUserRepository.get_user(model.creater_id)
+			self.creater = BUserRepository.get().get_user(model.creater_id)
 
 	def delete(self):
 		"""
@@ -83,3 +84,33 @@ class BRequirement(business_model.Model):
 			field: value
 		}
 		requirement_models.Requirement.objects.filter(id=self.id).update(**options)
+
+	@property
+	def comments(self):
+		b_comments = []
+		for db_model in requirement_models.RequirementComment.objects.filter(requirement_id=self.id):
+			b_comments.append(BRequirementComment.from_model(db_model))
+
+		return b_comments
+		
+	def add_comment(self, creater, content):
+		"""
+		向requirement添加一条comment
+		"""
+		comment = requirement_models.RequirementComment.objects.create(
+			creater = creater,
+			requirement_id = self.id,
+			content = content
+		)
+
+		b_comment = BRequirementComment.from_model(comment)
+
+		return b_comment
+
+	def delete_comment(self, comment_id):
+		"""
+		从requirement中删除一条comment
+		"""
+		requirement_models.RequirementComment.objects.filter(requirement_id=self.id, id=comment_id).delete()
+
+		return comment

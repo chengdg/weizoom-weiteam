@@ -3,7 +3,7 @@
  */
 "use strict";
 
-var debug = require('debug')('m:project.requirements:RequirementsPage');
+var debug = require('debug')('m:project.requirements:RequirementsPage:CommentList');
 var React = require('react');
 var ReactDOM = require('react-dom');
 var _ = require('underscore');
@@ -24,23 +24,34 @@ var CommentList = React.createClass({
 		return {
 			isInEditMode: false,
 			commentInEdit: '',
-			comments: this.props.value
+			comments: this.props.comments
 		}
+	},
+
+	componentWillReceiveProps: function(nextProps) {
+		this.setState({
+			comments: nextProps.comments
+		})
 	},
 
 	onClickAddComment: function(event) {
 		event.preventDefault();
 		event.stopPropagation();
 
+		var projectId = this.props.projectId;
+		var requirementId = this.props.requirementId;
+
 		Reactman.Resource.put({
 			resource: "project.requirement_comment",
 			data: {
+				project_id: projectId,
+				requirement_id: requirementId,
 				content: this.state.commentInEdit
 			},
 			scope: this,
-			success: function() {
+			success: function(data) {
 				var comments = this.state.comments;
-				comments.push(this.state.commentInEdit);
+				comments.push(data);
 
 				this.refs.input.clear();
 
@@ -62,6 +73,10 @@ var CommentList = React.createClass({
 
 		_.delay(_.bind(function() {
 			this.refs.input.focus();
+
+			if (this.props.onEnterEditMode) {
+				this.props.onEnterEditMode();
+			}
 		}, this), 100);
 	},
 
@@ -103,19 +118,22 @@ var CommentList = React.createClass({
 		return (
 			<div className="xui-i-actionArea">
 				<div style={richtextInputStyle}>
-					<Reactman.FormRichTextInput name="commentInEdit" value={this.state.commentInEdit} label="" height={200} width={this.props.width-30} onChange={this.onChange} ref="input" />
+					<Reactman.FormRichTextInput name="commentInEdit" value={this.state.commentInEdit} label="" height={200} width={this.props.width-60} onChange={this.onChange} ref="input" />
 				</div>
 				{cButton}
 			</div>
 		);
 	},
 
-	render: function() {
-
+	render: function() {		
 		var cComments = this.state.comments.map(function(comment, index) {
 			return (
-				<div className="xui-i-comment" key={index}>
-					{comment}
+				<div className="xui-i-comment" key={index}>   
+					<div className="clearfix">        
+						<div className="fl"><img src={comment.creater.thumbnail} className="xui-i-thumbnail" /></div>
+						<div className="fl ml10" dangerouslySetInnerHTML={{__html: comment.content}}></div>
+					</div>
+					<div className="xui-i-date">{comment.createdAt}</div>
 				</div>
 			)
 		});
@@ -123,7 +141,7 @@ var CommentList = React.createClass({
 		var cActionArea = this.renderActionArea();
 
 		return (
-		<div className="xui-project-commentList">
+		<div className="xui-project-requirementCommentList">
 			{cComments}
 
 			{cActionArea}

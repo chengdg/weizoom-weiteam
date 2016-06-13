@@ -176,7 +176,6 @@ var BusinessRequirementsPage = React.createClass({
 				<Reactman.Table resource={resource} formatter={this.rowFormatter} pagination={true} ref="table">
 					<Reactman.TableColumn name="#" field="id" width="40px" />
 					<Reactman.TableColumn name="需求" field="title" />
-					<Reactman.TableColumn name="标签" field="tags" width="100px" />
 					<Reactman.TableColumn name="重要度" field="importance" width="70px"/>
 					<Reactman.TableColumn name="故事点" field="storyPoint" width="70px"/>
 					<Reactman.TableColumn name="创建人" field="creater" width="70px" />

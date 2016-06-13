@@ -20,3 +20,17 @@
 .xui-project-editRequirementDialog .xui-i-bar {
 	background-color: #EFEFEF;
 }
+.xui-project-requirementCommentList .xui-i-comment {
+	margin: 10px;
+    padding: 5px 10px;
+    border-bottom: solid 1px #DDD;
+}
+.xui-project-requirementCommentList .xui-i-thumbnail {
+	display: block;
+    width: 50px;
+    border-radius: 10px;
+}
+.xui-project-requirementCommentList .xui-i-date {
+    text-align: right;
+    color: #BBB;
+}

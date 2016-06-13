@@ -15,70 +15,42 @@ import nav
 import models
 from resource import models as resource_models
 from util import string_util
-from business.project.b_project import BProject
-from business.project.b_project_repository import BProjectRepository
+from business.project.b_requirement_repository import BRequirementRepository
 
 
-class Requirement(resource.Resource):
+class RequirementComment(resource.Resource):
 	app = 'project'
-	resource = 'requirement'
+	resource = 'requirement_comment'
 	
 	@login_required
 	def api_put(request):
 		project_id = request.POST['project_id']
-		b_project = BProjectRepository.get().get_project_by_id(project_id)
-		b_project.add_requirement({
-			"owner": request.user,
-			"title": request.POST['title'],
-			"importance": request.POST['importance'],
-			"content": request.POST['content']
-		})
+		requirement_id = request.POST['requirement_id']
+		content = request.POST['content']
+		b_requirement = BRequirementRepository.get().get_requirement(project_id, requirement_id)
+		comment = b_requirement.add_comment(request.user, content)
 		
+		data = {
+			"id": comment.id,
+			"creater": {
+				"name": comment.creater.name,
+				"thumbnail": comment.creater.thumbnail
+			},
+			"content": comment.content,
+			"createdAt": comment.created_at.strftime("%Y-%m-%d %H:%M")
+		}
 		response = create_response(200)
-		return response.get_response()
-
-	@login_required
-	def api_post(request):
-		#更新商品
-		models.Product.objects.filter(owner=request.user, id=request.POST['id']).update(
-			name = request.POST['name'],
-			weight = request.POST['weight'],
-			price = request.POST['price'],
-			channels = request.POST['channels'],
-			detail = request.POST['detail'],
-			is_join_promotion = (request.POST['is_join_promotion'] == '1'),
-			promotion_finish_time = request.POST['promotion_finish_date']
-		)
-
-		#删除、重建商品规格
-		product = models.Product.objects.get(owner=request.user, id=request.POST['id'])
-		models.ProductModel.objects.filter(product_id=product.id).delete()
-		product_models = json.loads(request.POST['models'])
-		for product_model in product_models:
-			models.ProductModel.objects.create(product=product, name=product_model['name'], stocks=product_model['stocks'])
-
-		#删除、重建商品图片
-		models.ProductImage.objects.filter(product_id=product.id).delete()
-		product_images = json.loads(request.POST['images'])
-		for product_image in product_images:
-			models.ProductImage.objects.create(product=product, image_id=product_image['id'])
-
-		#删除、重建商品文档
-		models.ProductDocument.objects.filter(product_id=product.id).delete()
-		product_documents = json.loads(request.POST['documents'])
-		for product_document in product_documents:
-			models.ProductDocument.objects.create(product=product, document_id=product_document['id'])
-
-		response = create_response(200)
-
+		response.data = data
 		return response.get_response()
 
 	@login_required
 	def api_delete(request):
 		project_id = request.POST['project_id']
 		requirement_id = request.POST['requirement_id']
-		b_project = BProjectRepository.get().get_project_by_id(project_id)
-		b_project.delete_requirement(requirement_id)
+		comment_id = request.POST['comment_id']
+
+		b_requirement = BRequirementRepository.get().get_requirement(project_id, requirement_id)
+		b_requirement.delete_comment(comment_id)
 
 		response = create_response(200)
 		return response.get_response()

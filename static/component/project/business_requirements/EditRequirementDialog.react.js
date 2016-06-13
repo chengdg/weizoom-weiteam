@@ -12,6 +12,8 @@ var Reactman = require('reactman');
 var Action = require('./Action');
 var CommentList = require('../requirements/CommentList.react');
 
+require('../requirements/style.css');
+
 var EditRequirementDialog = Reactman.createDialog({
 	getInitialState: function() {
 		this.loadRequirement();
@@ -53,6 +55,12 @@ var EditRequirementDialog = Reactman.createDialog({
 		this.closeDialog();
 	},
 
+	onCommentListEnterEditMode: function(event) {
+		var $el = $(ReactDOM.findDOMNode(this));
+		var $dialog = $el.parents('.modal-body');
+		$dialog.scrollTop(99999999);
+	},
+
 	render:function(){
 		if (this.state.id) {
 			var importanceOptions = [{
@@ -86,7 +94,12 @@ var EditRequirementDialog = Reactman.createDialog({
 				</div>
 				<div className="xui-i-content" dangerouslySetInnerHTML={{__html: this.state.content}}></div>
 
-				<CommentList value={this.state.comments} width={this.props.dialogSize.width} />
+				<CommentList 
+					comments={this.state.comments} 
+					width={this.props.dialogSize.width} 
+					projectId={this.props.data.projectId} 
+					requirementId={this.props.data.requirementId} 
+					onEnterEditMode={this.onCommentListEnterEditMode} />
 			</form>
 		</div>
 		)
