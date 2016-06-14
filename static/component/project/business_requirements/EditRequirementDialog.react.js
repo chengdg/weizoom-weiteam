@@ -11,9 +11,7 @@ var PureRenderMixin = require('react-addons-pure-render-mixin');
 var Reactman = require('reactman');
 
 var Action = require('./Action');
-var CommentList = require('../requirements/CommentList.react');
-
-require('../requirements/style.css');
+var CommentList = require('../common/comment_list/CommentList.react');
 
 var EditRequirementDialog = Reactman.createDialog({
 	mixins: [PureRenderMixin],
