@@ -21,6 +21,7 @@ require('./style.css');
 
 var CommentList = React.createClass({
 	getInitialState: function() {
+		this.isDirty = false;
 		return {
 			isInEditMode: false,
 			commentInEdit: '',
@@ -29,9 +30,26 @@ var CommentList = React.createClass({
 	},
 
 	componentWillReceiveProps: function(nextProps) {
-		this.setState({
-			comments: nextProps.comments
-		})
+		if (!this.isDirty) {
+			debug('receive props');
+			debug(nextProps);
+			this.setState({
+				comments: nextProps.comments
+			});
+		}
+	},
+
+	componentDidUpdate: function() {
+		var $el = $(ReactDOM.findDOMNode(this));
+		$el.find('.xa-comment').each(function() {
+			var $comment = $(this);
+			var $actionBar = $comment.find('.xa-actionBar').eq(0);
+			$comment.mouseenter(function() {
+				$actionBar.removeClass('xui-hide');
+			}).mouseleave(function() {
+				$actionBar.addClass('xui-hide');
+			});
+		});
 	},
 
 	onClickAddComment: function(event) {
@@ -52,6 +70,7 @@ var CommentList = React.createClass({
 			success: function(data) {
 				var comments = this.state.comments;
 				comments.push(data);
+				this.isDirty = true;
 
 				this.refs.input.clear();
 
@@ -98,6 +117,43 @@ var CommentList = React.createClass({
 		this.setState(newState);
 	},
 
+	onClickDeleteComment: function(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		var id = parseInt(event.currentTarget.getAttribute('data-id'));
+
+		var projectId = this.props.projectId;
+		var requirementId = this.props.requirementId;
+		Reactman.PageAction.showConfirm({
+			target: event.target, 
+			title: '确认删除吗?',
+			confirm: _.bind(function() {
+				Reactman.Resource.delete({
+					resource: 'project.requirement_comment',
+					data: {
+						project_id: projectId,
+						requirement_id: requirementId,
+						comment_id: id
+					},
+					scope: this,
+					success: function() {
+						Reactman.PageAction.showHint('success', '删除评论成功');
+						var newComments = _.filter(this.state.comments, function(comment) {
+							return comment.id !== id;
+						});
+						this.isDirty = true;
+						this.setState({
+							comments: newComments
+						});
+					},
+					error: function() {
+						Reactman.PageAction.showHint('error', '删除评论失败');
+					}
+				})
+			}, this)
+		});
+	},
+
 	renderActionArea: function() {
 		var cButton = null;
 		var richtextInputStyle = {};
@@ -125,15 +181,19 @@ var CommentList = React.createClass({
 		);
 	},
 
-	render: function() {		
+	render: function() {
+		var _this = this;
 		var cComments = this.state.comments.map(function(comment, index) {
 			return (
-				<div className="xui-i-comment" key={index}>   
+				<div className="xui-i-comment xa-comment" key={index}>   
 					<div className="clearfix">        
 						<div className="fl"><img src={comment.creater.thumbnail} className="xui-i-thumbnail" /></div>
 						<div className="fl ml10" dangerouslySetInnerHTML={{__html: comment.content}}></div>
 					</div>
 					<div className="xui-i-date">{comment.createdAt}</div>
+					<div className="xui-i-actionBar xa-actionBar xui-hide">
+						<button className="btn btn-default btn-xs ml5" data-id={comment.id} onClick={_this.onClickDeleteComment}><span className="glyphicon glyphicon-remove"></span></button>
+					</div>
 				</div>
 			)
 		});

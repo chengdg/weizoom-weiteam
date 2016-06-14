@@ -113,4 +113,4 @@ class BRequirement(business_model.Model):
 		"""
 		requirement_models.RequirementComment.objects.filter(requirement_id=self.id, id=comment_id).delete()
 
-		return comment
+		return True

@@ -31,7 +31,8 @@
     "webpack-dev-server": "^1.14.1",
     "reactman": "git+https://git2.weizzz.com:84/productivity/reactman.git",
     "babel-runtime": "^6.6.1",
-    "underscore.string": "^3.2.1"
+    "underscore.string": "^3.2.1",
+    "react-addons-pure-render-mixin": "^15.1.0"
   },
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.8.0",

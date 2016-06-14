@@ -6,6 +6,7 @@
 var debug = require('debug')('m:project.business_requirements:EditRequirementDialog');
 var React = require('react');
 var ReactDOM = require('react-dom');
+var PureRenderMixin = require('react-addons-pure-render-mixin');
 
 var Reactman = require('reactman');
 
@@ -15,6 +16,8 @@ var CommentList = require('../requirements/CommentList.react');
 require('../requirements/style.css');
 
 var EditRequirementDialog = Reactman.createDialog({
+	mixins: [PureRenderMixin],
+
 	getInitialState: function() {
 		this.loadRequirement();
 		return {
@@ -85,6 +88,10 @@ var EditRequirementDialog = Reactman.createDialog({
 				value: '-1'
 			}];
 		}
+
+		debug('render');
+		debug(this);
+		console.log(this.shouldComponentUpdate);
 
 		return (
 		<div className="xui-formPage xui-project-editBusinessRequirementDialog">
